@@ -426,7 +426,7 @@ body {
   height: 1vmin;
   background-color: rgb(255, 251, 0);
   border-radius: 50%;
-  filter: blur(0.2vmin);
+  
   -webkit-animation: light-ans 4s linear infinite backwards;
           animation: light-ans 4s linear infinite backwards;
 }
@@ -1684,3 +1684,19 @@ body {
 .flower--7 .flower__line__leaf--2 { animation: blooming-leaf-right var(--fl-speed) 3.3s backwards; }
 .flower--7 .flower__line__leaf--3 { animation: blooming-leaf-left var(--fl-speed) 3.1s backwards; }
 .flower--7 .flower__line__leaf--4 { animation: blooming-leaf-left var(--fl-speed) 2.9s backwards; }
+/* --- UPDATE: Flüssige Bewegungen (Anti-Ruckeln) --- */
+
+/* Wir wählen alle Blumen (1 bis 7) aus */
+.flower--1, .flower--2, .flower--3, .flower--4, .flower--5, .flower--6, .flower--7 {
+    /* ease-in-out sorgt für sanftes Abbremsen an den Umkehrpunkten */
+    animation-timing-function: ease-in-out !important;
+    
+    /* Performance-Booster: Sagt dem Browser, dass sich hier was bewegt */
+    will-change: transform;
+}
+
+/* Das Gleiche machen wir auch für das Gras, damit es harmonisch wirkt */
+.flower__grass--1, .flower__grass--2 {
+    animation-timing-function: ease-in-out !important;
+    will-change: transform;
+}
