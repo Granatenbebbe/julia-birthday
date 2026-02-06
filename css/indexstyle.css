@@ -246,55 +246,58 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- SIMPLE MOBILE FIX (Fokus auf die Mitte) --- */
+/* --- FINALE MOBILE KORREKTUR (Zentriert & im Umschlag) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag passt auf den Screen */
+    /* 1. Umschlag skalieren */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* WICHTIG: Wir ändern den Drehpunkt auf die MITTE für Mobile */
+        /* Zoom-Fokus auf die Mitte setzen */
         transform-origin: center center !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
-        /* Wir zoomen stark (scale 6 reicht bei Center-Fokus oft schon) */
+        /* Wir zoomen auf die Mitte */
         transform: scale(6) !important; 
-        /* Fokus bleibt in der Mitte, wo der Brief ist */
         transform-origin: center center !important; 
     }
 
-    /* 3. Der Brief - nur ein kleines Stück hochschieben */
+    /* 3. Der Brief: Position "nullen" und sauber zentrieren */
+    .envelope > .letter {
+        /* WICHTIG: Desktop-Werte überschreiben, damit er nicht fliegt */
+        right: auto !important; 
+        left: 50% !important;
+        width: 90% !important;
+        bottom: 0 !important;
+        
+        /* Basis-Position: Horizontal zentriert */
+        transform: translateX(-50%) !important;
+        
+        /* Er muss HINTER der Tasche (z-index: 2) bleiben */
+        z-index: 1 !important; 
+        
+        opacity: 0;
+    }
+
+    /* 4. Die Animation beim Öffnen */
     .flap .envelope .letter {
-        /* Wir lösen ihn vom Boden */
-        bottom: auto !important;
-        top: 50% !important; /* Startet ab der Mitte */
+        /* Horizontal zentriert bleiben (translateX -50%) 
+           und vertikal leicht nach oben schieben (translateY -40px) */
+        transform: translateX(-50%) translateY(-40px) scale(0.9) !important;
         
-        /* Wir schieben ihn nur sanft etwas höher und holen ihn nach vorne */
-        transform: translate(-50%, -50%) scale(0.8) translateZ(50px) !important;
+        /* Immer noch HINTER der Tasche bleiben */
+        z-index: 1 !important;
         
-        /* Er liegt ÜBER der Lasche */
-        z-index: 10;
+        opacity: 1;
         
-        /* Sanfte Animation */
+        /* Erst losfahren, wenn der Umschlag offen ist */
         transition: 
             transform 1.5s ease-in-out 1.0s, 
             opacity 0.5s linear 1.0s;
-            
-        opacity: 1; 
-        
-        /* Damit er mittig zentriert bleibt */
-        left: 50% !important;
-        width: 90% !important; /* Brief etwas breiter machen am Handy */
-    }
-
-    /* Verstecken bei geschlossenem Umschlag */
-    .envelope .letter {
-        opacity: 0; 
-        transition: opacity 0.1s; 
     }
     
-    /* Siegel Anpassung */
+    /* Siegel & Hinweis */
     .heart {
         width: 120px;
         height: 120px;
