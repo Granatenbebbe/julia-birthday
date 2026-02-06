@@ -246,26 +246,28 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V7 (Kleiner, Schmaler & Top-Fokus) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V8 (Zoom über Umschlag & Brief groß) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis-Position */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* KORREKTUR: Fokus ganz oben an der Kante (0%) */
-        transform-origin: center 0% !important; 
+        /* KORREKTUR: Fokus ins Negative (-10%), also ÜBER den Umschlag */
+        transform-origin: center -10% !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
+        /* Zoom bleibt stark */
         transform: scale(6) !important; 
-        transform-origin: center 0% !important; 
+        /* Kamera schaut auf den Bereich über der Öffnung */
+        transform-origin: center -10% !important; 
     }
 
     /* 3. Der Brief - Startzustand */
     .envelope > .letter {
-        /* KORREKTUR: Schmaler machen (70%) */
-        width: 70% !important;
+        /* Zurück auf 80% Breite, damit er bei 0.9 Scale nicht zu breit wird */
+        width: 80% !important;
         
         right: auto !important; 
         left: 50% !important;
@@ -279,15 +281,17 @@ body.start-fade .fade-overlay {
     /* 4. Der Brief - Endzustand */
     .flap .envelope .letter {
         /* KORREKTUR:
-           - scale(0.75): Brief insgesamt kleiner
-           - translateY(-120px): Schiebt ihn passend zum 0%-Zoom ins Bild
+           - scale(0.9): Wieder groß wie gewünscht.
+           - translateY(-180px): Kräftiger Schub nach oben, damit er 
+             sich von der Lasche (dem "öffnenden Teil") löst.
         */
-        transform: translate(-50%, -50%) translateY(-120px) scale(0.75) !important;
+        transform: translate(-50%, -50%) translateY(-180px) scale(0.9) !important;
         
+        /* Bleibt im Umschlag stecken (hinter der Tasche) */
         z-index: 1 !important;
         opacity: 1;
         
-        /* Timing bleibt bei 0.8s, damit er direkt sichtbar ist */
+        /* Timing: Startet direkt (0.8s) */
         transition: 
             transform 2.0s ease-in-out 0.8s, 
             opacity 0.5s linear 0.8s;
