@@ -264,7 +264,7 @@ body.start-fade .fade-overlay {
     .envelope > .letter {
         /* KORREKTUR: Kleiner gemacht, damit er nirgends anstößt */
         height: 86% !important; 
-        width: 50% !important;
+        width: 60% !important;
         
         right: auto !important; 
         left: 50% !important;
