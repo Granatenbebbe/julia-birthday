@@ -260,12 +260,37 @@ body.start-fade .fade-overlay {
         transform: scale(25); /* Extremer Zoom für Mobile */
     }
 
-    /* 3. Der Brief muss am Handy anders verhalten */
+    /* DER FIX: Brief wartet länger und bleibt länger unsichtbar */
     .flap .envelope .letter {
-        /* Wir müssen ihn am Handy nicht so stark verkleinern, 
-           da der Umschlag relativ zum Screen schon kleiner war */
+        /* Position: Wir schieben ihn noch etwas tiefer in den Umschlag, 
+           damit er nicht oben rausspitzt */
+        top: 20px !important; 
+        
+        /* Skalierung für Mobile */
         transform: scale(0.5) translateZ(50px) !important;
-        top: -60px !important; /* Etwas höher schieben */
+        
+        /* WICHTIG: Das Timing! */
+        /* Wir erhöhen die Wartezeit (Delay) von 0.8s auf 1.5s. */
+        /* Erst NACH 1.5 Sekunden (wenn die Lasche oben ist) fängt er an. */
+        transition: 
+            transform 1.5s ease-in-out 1.5s, /* Bewegt sich erst nach 1.5s */
+            top 1.5s ease-in-out 1.5s,
+            opacity 0.5s linear 1.0s; /* Blendet sich langsam ein */
+            
+        /* Optional: Am Anfang leicht transparent, damit er nicht durchblitzt */
+        opacity: 1; 
+    }
+    
+    /* Damit man den Brief im geschlossenen Zustand GAR NICHT sieht */
+    .envelope .letter {
+        /* Im geschlossenen Zustand verstecken wir ihn ein bisschen */
+        opacity: 0; 
+        transition: opacity 0.1s; /* Sofort weg, wenn zu */
+    }
+    
+    /* Sobald offen (.flap), machen wir ihn sichtbar */
+    .flap .envelope .letter {
+        opacity: 1;
     }
     
     /* 4. Das Siegel und der Hinweis */
