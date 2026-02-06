@@ -1715,86 +1715,134 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- NOTFALL-OPTIMIERUNG FÜR MOBILE (Gegen Einfrieren) --- */
+/* --- FINALE OPTIK-KORREKTUR FÜR HANDY (V3) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. BLUMEN-ZAHL REDUZIEREN 
-       Wir zeigen nur die 4 Blumen, die man auf deinem Screenshot schon sieht.
-       Das sieht wie ein fertiger Strauß aus, spart aber 40% Rechenleistung! */
-    .flower--5, .flower--6, .flower--7 {
-        display: none !important;
-    }
-    
-    /* 2. TEXT SOFORT SICHTBAR MACHEN
-       Wir entfernen die Animation für den Text auf dem Handy.
-       So steht er garantiert da, selbst wenn das Handy kurz hakt. */
-    .birthday-message span {
-        opacity: 1 !important;
-        animation: none !important; /* Kein Fade-In, einfach da sein */
-        font-size: 3.5rem;
-        display: inline-block;
-        line-height: 1.2;
-        filter: drop-shadow(2px 2px 0px rgba(0,0,0,1));
-    }
-    
-    /* Julia-Name */
-    .birthday-message span.name-highlight {
-        font-size: 4.5rem;
-        display: block;
-        margin-top: 15px;
-        position: relative;
+    /* 1. HINTERGRUND FIXIEREN (Gegen Abschneiden) */
+    body {
+        overflow: hidden; /* Verhindert Scrollbalken */
+        width: 100vw;
+        height: 100vh;
     }
 
-    /* Positionierung des Textes */
+    .night {
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* WICHTIG: vw/vh erzwingt die volle Bildschirmgröße, egal was der Inhalt macht */
+        width: 100vw !important; 
+        height: 100vh !important;
+        background: #000 !important;
+        background: radial-gradient(circle at center, #111 0%, #000 100%) !important;
+        z-index: -1;
+    }
+
+    /* 2. SCHRIFTART RETTEN */
     .birthday-message {
         width: 100%;
-        top: 20%; /* Höher setzen, damit er über den Blumen schwebt */
-        z-index: 999999;
+        top: 25%; /* Etwas höher, damit Platz für die riesigen Blumen ist */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+    }
+    
+    .birthday-message span {
+        /* Erzwingt die Schreibschrift, falls das Handy eine andere wählen will */
+        font-family: 'Send Flowers', cursive !important; 
+        
+        opacity: 0; 
+        animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
+        font-size: 3.5rem; /* Falls dir das zu klein ist: auf 4rem ändern */
+        display: inline-block;
+        color: #ffbf00; /* Sicherheitsfarbe, falls Gradient nicht lädt */
+        
+        /* Der goldene Text-Effekt muss auf Mobile oft neu gesetzt werden */
+        background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .birthday-message span.name-highlight {
+        font-family: 'Send Flowers', cursive !important;
+        font-size: 5rem; /* Name noch größer */
+        display: block;
+        margin-top: 10px;
+        position: relative;
+        animation-delay: 1.5s !important;
     }
 
-    /* Sonnenblumen beim Namen */
+    /* Sonnenblumen wieder richtig positionieren */
     .birthday-message span.name-highlight::before {
-        font-size: 2.2rem;
-        left: 20px; top: -40px; transform: rotate(-20deg);
+        content: '\1F33B';
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", serif; /* Emoji-Font sicherstellen */
+        font-size: 2.5rem;
+        position: absolute;
+        left: 10px; top: -50px; 
+        transform: rotate(-20deg);
+        filter: none !important;
+        opacity: 1 !important;
     }
     .birthday-message span.name-highlight::after {
-        font-size: 2.2rem;
-        right: 20px; top: -40px; transform: rotate(20deg);
+        content: '\1F33B';
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", serif;
+        font-size: 2.5rem;
+        position: absolute;
+        right: 10px; top: -50px; 
+        transform: rotate(20deg);
+        filter: none !important;
+        opacity: 1 !important;
     }
 
-    /* 3. OPTIMIERUNG DER BLUMEN (Größe & Position) */
+    /* 3. BLUMEN RICHTIG GROSS MACHEN */
     .flowers {
-        scale: 1.5; /* Schön groß */
-        bottom: 5vh;
+        /* Von 1.5 auf 2.3 erhöht! */
+        scale: 2.3; 
+        
+        /* Positionierung anpassen, damit sie nicht zu hoch rutschen */
+        bottom: 8vh; 
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
+        transform-origin: bottom center; /* Wächst vom Boden nach oben */
     }
 
-    /* 4. PERFORMANCE-KILLER ABSCHALTEN (Wichtig!) */
+    /* --- DER REST BLEIBT (Performance & Animation) --- */
     
-    /* Lichter/Glühwürmchen ausblenden (verursachen oft Lags) */
-    .flower__light {
-        display: none !important;
+    /* Animationen ausschalten für Performance */
+    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf, .flower__g-front, .flower__g-fr {
+        animation: none !important;
+        transition: none !important;
     }
 
-    /* Gras ausblenden (zu viele kleine bewegte Teile) */
-    .flower__grass {
-        display: none !important;
-    }
-    
-    /* Hintergrund vereinfachen (kein Blur, kein komplexes Gradient-Neuberechnen) */
-    .night {
-        position: fixed;
-        height: 120vh;
-        background: #000 !important; /* Einfaches Schwarz statt schwerer Grafik */
-        filter: none !important;
-        background-image: radial-gradient(circle at center, #0a1a0a 0%, #000 100%) !important; /* Leichter Schein */
-    }
-
-    /* Schatten und komplexe Verläufe auf den Pflanzen entfernen */
+    /* Schatten weg */
     .flower__leaf, .flower__line, .flower__line__leaf {
         box-shadow: none !important;
         filter: none !important;
+    }
+
+    /* Sanftes Einblenden der Blumen */
+    .flower {
+        opacity: 0;
+        animation: flowerAppear 2s ease-out forwards !important;
+    }
+
+    .flower--1 { animation-delay: 1.0s !important; }
+    .flower--2 { animation-delay: 2.0s !important; }
+    .flower--3 { animation-delay: 3.0s !important; }
+    .flower--4 { animation-delay: 4.0s !important; }
+    
+    /* Rest ausblenden */
+    .flower--5, .flower--6, .flower--7, .flower__light, .flower__grass { 
+        display: none !important; 
+    }
+
+    @keyframes flowerAppear {
+        0% { opacity: 0; transform: scale(0.8); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes simpleFadeIn {
+        to { opacity: 1; }
     }
 }
