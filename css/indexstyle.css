@@ -245,3 +245,36 @@ body.start-fade .fade-overlay {
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
+
+/* --- MOBILE ANPASSUNGEN (Handy) --- */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Umschlag kleiner machen, damit er auf den Screen passt */
+    .container > .envelope-wrapper {
+        transform: scale(0.7); /* Startet kleiner (70%) */
+    }
+
+    /* 2. Beim Öffnen viel stärker zoomen */
+    /* Handys sind lang, scale(12) reicht oft nicht, um alles schwarz zu machen */
+    .container > .envelope-wrapper.flap {
+        transform: scale(25); /* Extremer Zoom für Mobile */
+    }
+
+    /* 3. Der Brief muss am Handy anders verhalten */
+    .flap .envelope .letter {
+        /* Wir müssen ihn am Handy nicht so stark verkleinern, 
+           da der Umschlag relativ zum Screen schon kleiner war */
+        transform: scale(0.5) translateZ(50px) !important;
+        top: -60px !important; /* Etwas höher schieben */
+    }
+    
+    /* 4. Das Siegel und der Hinweis */
+    .heart {
+        width: 120px; /* Größeres Tipp-Ziel am Handy */
+        height: 120px;
+    }
+    .click-hint {
+        font-size: 14px; /* Größerer Text */
+        bottom: -35px;
+    }
+}

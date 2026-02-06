@@ -1714,3 +1714,42 @@ body {
     /* Oder alternativ, falls du den Schatten behalten willst, aber weicher: */
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
+
+/* --- MOBILE ANPASSUNGEN (Handy) --- */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Die Blumenwiese massiv vergrößern */
+    .flowers {
+        /* Von 0.95 auf 1.8 verdoppeln, damit sie das Handy füllen */
+        scale: 1.8; 
+        bottom: 5vh; /* Etwas nach oben schieben */
+    }
+
+    /* 2. Den Text anpassen (damit "Julia" nicht abgeschnitten wird) */
+    .birthday-message span {
+        font-size: 3.5rem; /* Kleiner als am Desktop (6rem) */
+    }
+    
+    .birthday-message span.name-highlight {
+        font-size: 5rem; /* Kleiner als am Desktop (8rem) */
+        display: block; /* Name in neue Zeile zwingen, falls nötig */
+        margin-top: 10px;
+    }
+
+    /* 3. Die Sonnenblumen neben dem Namen anpassen */
+    .birthday-message span.name-highlight::before {
+        font-size: 2.5rem;
+        left: -35px;
+        top: 60%;
+    }
+    .birthday-message span.name-highlight::after {
+        font-size: 2.5rem;
+        right: -35px;
+        top: 60%;
+    }
+    
+    /* 4. Hintergrund fixieren (verhindert Springen bei Adressleiste) */
+    .night {
+        height: 120vh; /* Etwas größer als der Screen */
+    }
+}
