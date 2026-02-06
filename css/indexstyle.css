@@ -249,14 +249,17 @@ body.start-fade .fade-overlay {
 /* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
 @media screen and (max-width: 768px) {
 
-   /* 1. Umschlag Basis */
+  /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
         transform-origin: center -10% !important; 
         
-        /* NEU HINZUFÜGEN: Eigene Zeitsteuerung für das Handy */
-        /* Original war: 3.5s Dauer und 1.2s Wartezeit */
-        /* Neu: 2.5s Dauer (etwas schneller) und nur 0.5s Wartezeit */
+        /* PERFORMANCE-BOOST: Zwingt das Handy, die Grafikkarte zu nutzen */
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        
+        /* Das Timing von vorhin (2.5s Dauer, 0.8s Startverzögerung) */
         transition: transform 2.5s ease-in-out 0.8s;
     }
 
@@ -289,13 +292,17 @@ body.start-fade .fade-overlay {
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* KORREKTUR: Von -150px auf -90px reduziert. 
-           Verhindert, dass der Brief zu weit oben "kollidiert" oder rausfliegt. */
+        /* Deine gewünschte Position (-90px damit nichts kollidiert) */
         transform: translate(-50%, -50%) translateY(-90px) scale(0.9) !important;
         
         z-index: 1 !important; 
         opacity: 1 !important;
         
+        /* PERFORMANCE-BOOST für den Brief */
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        
+        /* Dein Timing */
         transition: 
             transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
             opacity 0.1s ease-out 0.2s; 
