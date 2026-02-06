@@ -246,20 +246,21 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V5 (Timing & Fokus angepasst) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V6 (Schneller & Fokus ganz oben) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis-Position */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* WICHTIG: Fokus noch höher setzen (25%), damit wir die Öffnung sehen */
-        transform-origin: center 25% !important; 
+        /* Fokus extrem weit oben (10%), fast an der Kante */
+        transform-origin: center 10% !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
+        /* Starker Zoom auf die Oberkante */
         transform: scale(6) !important; 
-        transform-origin: center 25% !important; 
+        transform-origin: center 10% !important; 
     }
 
     /* 3. Der Brief - Startzustand (versteckt & zentriert) */
@@ -274,21 +275,23 @@ body.start-fade .fade-overlay {
         opacity: 0;
     }
 
-    /* 4. Der Brief - Endzustand (rausgefahren) */
+    /* 4. Der Brief - Endzustand (sichtbar) */
     .flap .envelope .letter {
-        /* KORREKTUR 1: Weniger weit hoch (-140px statt -200px) */
-        transform: translate(-50%, -50%) translateY(-140px) scale(0.9) !important;
+        /* Bewegung: 
+           Da wir ganz oben zoomen, schieben wir den Brief sanft ins Bild (-120px) 
+        */
+        transform: translate(-50%, -50%) translateY(-120px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* KORREKTUR 2: Viel später starten!
-           - Delay auf 2.0s erhöht (Zoom dauert 3.5s, also warten wir länger)
-           - Dauer auf 2.0s erhöht (sanftere Bewegung)
+        /* TIMING FIX: 
+           Startet jetzt viel früher (0.8s), direkt wenn die Lasche hochgeht.
+           Keine Wartezeit mehr im Dunkeln!
         */
         transition: 
-            transform 2.0s ease-in-out 2.0s, 
-            opacity 1.0s linear 2.0s;
+            transform 2.0s ease-in-out 0.8s, 
+            opacity 0.5s linear 0.8s;
     }
     
     /* Siegel & Hinweis */
