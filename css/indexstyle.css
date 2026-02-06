@@ -289,14 +289,20 @@ body.start-fade .fade-overlay {
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* ... andere Eigenschaften lassen ... */
+        /* Endposition: Nach oben schieben */
+        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
-        /* Hier bei transform die 1.5s am Ende auf z.B. 1.0s ändern */
+        /* FIX: Z-Index extrem hoch setzen, damit er sicher VOR dem Umschlag liegt */
+        z-index: 99 !important; 
+        
+        /* Sicherstellen, dass er wirklich sichtbar wird */
+        opacity: 1 !important;
+        
+        /* Dein angepasstes, flüssigeres Timing */
         transition: 
             transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.0s, 
             opacity 0.6s ease-out 0.8s; 
     }
-    
     /* Siegel & Hinweis */
     .heart { width: 120px; height: 120px; }
     .click-hint { display: none; }
