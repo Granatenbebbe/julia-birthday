@@ -246,13 +246,12 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V11 (Sichtbarkeit Fix) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V12 (Kleiner & Früher) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis & Zoom */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* Fokus bleibt oben (-10%) */
         transform-origin: center -10% !important; 
     }
 
@@ -263,8 +262,9 @@ body.start-fade .fade-overlay {
 
     /* 2. Der Brief - Startzustand */
     .envelope > .letter {
-        height: 95% !important; 
-        width: 80% !important;
+        /* KORREKTUR: Kleiner gemacht, damit er nirgends anstößt */
+        height: 86% !important; 
+        width: 70% !important;
         
         right: auto !important; 
         left: 50% !important;
@@ -277,18 +277,19 @@ body.start-fade .fade-overlay {
 
     /* 3. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Endposition: Oben rausgeschoben */
+        /* Endposition: -150px reicht bei der neuen Größe */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* DER FIX: Getrennte Zeitpläne!
-           1. transform (Bewegung): Wartet 2.2s (damit Lasche weg ist)
-           2. opacity (Sichtbarkeit): Kommt schon bei 0.6s (sobald Lasche aufgeht)
+        /* TIMING UPDATE:
+           1. transform: Startet jetzt schon bei 1.6s (statt 2.2s).
+              Das ist deutlich früher, aber noch sicher genug.
+           2. opacity: Bleibt bei 0.6s (sofort sichtbar).
         */
         transition: 
-            transform 2.0s ease-in-out 2.2s, 
+            transform 2.0s ease-in-out 1.6s, 
             opacity 0.1s linear 0.6s; 
     }
     
