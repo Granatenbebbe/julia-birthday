@@ -246,61 +246,58 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE ANPASSUNGEN V3 --- */
+/* --- SIMPLE MOBILE FIX (Fokus auf die Mitte) --- */
 @media screen and (max-width: 768px) {
-    
-    /* 1. Umschlag passt auf den Screen (Startzustand) */
+
+    /* 1. Umschlag passt auf den Screen */
     .container > .envelope-wrapper {
-        transform: scale(0.7); 
+        transform: scale(0.7);
+        /* WICHTIG: Wir ändern den Drehpunkt auf die MITTE für Mobile */
+        transform-origin: center center !important; 
     }
 
-    /* 2. Zoom beim Öffnen: */
-    /* Wir erhöhen wieder auf 12. Das sorgt für den "Kino-Effekt" und dunklen Hintergrund. */
+    /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
-        transform: scale(12); 
+        /* Wir zoomen stark (scale 6 reicht bei Center-Fokus oft schon) */
+        transform: scale(6) !important; 
+        /* Fokus bleibt in der Mitte, wo der Brief ist */
+        transform-origin: center center !important; 
     }
 
-    /* 3. Der Brief: Muss extrem weit nach oben, um im Zoom sichtbar zu sein */
+    /* 3. Der Brief - nur ein kleines Stück hochschieben */
     .flap .envelope .letter {
-        bottom: 0 !important;
-        top: auto !important;
+        /* Wir lösen ihn vom Boden */
+        bottom: auto !important;
+        top: 50% !important; /* Startet ab der Mitte */
         
-        /* ERKLÄRUNG DER WERTE:
-           - translateY(-400px): Da wir auf den OBEREN Rand zoomen, muss der Brief 
-             von ganz unten (340px) komplett nach oben geschoben werden.
-           - scale(0.6): Damit der Text bei dem starken Zoom lesbar bleibt.
-           - translateZ(50px): Hilft beim Rendering.
-        */
-        transform: translateY(-400px) scale(0.6) translateZ(50px) !important;
+        /* Wir schieben ihn nur sanft etwas höher und holen ihn nach vorne */
+        transform: translate(-50%, -50%) scale(0.8) translateZ(50px) !important;
         
-        /* WICHTIG: Damit er ÜBER der offenen Lasche liegt */
-        z-index: 10; 
+        /* Er liegt ÜBER der Lasche */
+        z-index: 10;
         
-        /* TIMING:
-           - 1.5s warten (Brief bleibt unten bis Umschlag offen ist)
-           - Dann in 1.5s nach oben fahren
-        */
+        /* Sanfte Animation */
         transition: 
-            transform 1.5s ease-in-out 1.5s, 
-            opacity 0.5s linear 1.0s,
-            z-index 0s linear 1.5s; 
+            transform 1.5s ease-in-out 1.0s, 
+            opacity 0.5s linear 1.0s;
             
         opacity: 1; 
-        transform-origin: center top;
+        
+        /* Damit er mittig zentriert bleibt */
+        left: 50% !important;
+        width: 90% !important; /* Brief etwas breiter machen am Handy */
     }
-    
+
     /* Verstecken bei geschlossenem Umschlag */
     .envelope .letter {
         opacity: 0; 
         transition: opacity 0.1s; 
     }
-
-    /* Siegel & Hinweis */
+    
+    /* Siegel Anpassung */
     .heart {
         width: 120px;
         height: 120px;
     }
-    .click-hint {
-        display: none; 
-    }
+    .click-hint { display: none; }
 }
