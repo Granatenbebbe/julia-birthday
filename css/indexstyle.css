@@ -264,7 +264,7 @@ body.start-fade .fade-overlay {
     /* 3. Der Brief - Startzustand */
     .envelope > .letter {
         height: 86% !important; 
-        width: 60% !important;
+        width: 70% !important;
         
         right: auto !important; 
         left: 50% !important;
