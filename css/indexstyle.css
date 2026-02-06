@@ -289,20 +289,11 @@ body.start-fade .fade-overlay {
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Endposition */
-        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
+        /* ... andere Eigenschaften lassen ... */
         
-        z-index: 1 !important;
-        opacity: 1;
-        
-        /* DAS SMOOTHING UPDATE:
-           1. transform: Startet bei 1.5s, aber mit "cubic-bezier".
-              Das bedeutet: Er beschleunigt ganz sanft, statt ruckartig loszufahren.
-           2. opacity: Dauert jetzt 0.6s (statt 0.1s).
-              Der Brief "geistert" langsam rein, statt aufzuploppen.
-        */
+        /* Hier bei transform die 1.5s am Ende auf z.B. 1.0s ändern */
         transition: 
-            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s, 
+            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.0s, 
             opacity 0.6s ease-out 0.8s; 
     }
     
