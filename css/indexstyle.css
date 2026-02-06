@@ -246,23 +246,23 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V12 (Kleiner & Früher) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag Basis & Zoom */
+    /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
         transform-origin: center -10% !important; 
     }
 
+    /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
         transform-origin: center -10% !important; 
     }
 
-    /* 2. Der Brief - Startzustand */
+    /* 3. Der Brief - Startzustand */
     .envelope > .letter {
-        /* KORREKTUR: Kleiner gemacht, damit er nirgends anstößt */
         height: 86% !important; 
         width: 60% !important;
         
@@ -270,27 +270,35 @@ body.start-fade .fade-overlay {
         left: 50% !important;
         bottom: auto !important;
         top: 50% !important;
+        
+        /* Startposition: Exakt mittig */
         transform: translate(-50%, -50%) !important;
+        
         z-index: 1 !important; 
         opacity: 0;
+
+        /* WICHTIG: Verhindert Flackern auf Handys */
+        will-change: transform, opacity;
+        backface-visibility: hidden;
     }
 
-    /* 3. Der Brief - Animation */
+    /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Endposition: -150px reicht bei der neuen Größe */
+        /* Endposition */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* TIMING UPDATE:
-           1. transform: Startet jetzt schon bei 1.6s (statt 2.2s).
-              Das ist deutlich früher, aber noch sicher genug.
-           2. opacity: Bleibt bei 0.6s (sofort sichtbar).
+        /* DAS SMOOTHING UPDATE:
+           1. transform: Startet bei 1.5s, aber mit "cubic-bezier".
+              Das bedeutet: Er beschleunigt ganz sanft, statt ruckartig loszufahren.
+           2. opacity: Dauert jetzt 0.6s (statt 0.1s).
+              Der Brief "geistert" langsam rein, statt aufzuploppen.
         */
         transition: 
-            transform 2.0s ease-in-out 1.6s, 
-            opacity 0.1s linear 0.6s; 
+            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s, 
+            opacity 0.6s ease-out 0.8s; 
     }
     
     /* Siegel & Hinweis */
