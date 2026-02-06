@@ -254,12 +254,16 @@ body.start-fade .fade-overlay {
         transform: scale(0.7);
         transform-origin: center -10% !important; 
         
-        /* PERFORMANCE-BOOST: Zwingt das Handy, die Grafikkarte zu nutzen */
+        /* WICHTIGSTER FIX: Schatten killen! 
+           Das Entfernen dieses Schattens entlastet den Handy-Prozessor massiv. */
+        box-shadow: none !important;
+
+        /* Hardware-Beschleunigung */
         will-change: transform;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         
-        /* Das Timing von vorhin (2.5s Dauer, 0.8s Startverzögerung) */
+        /* Dein gewünschtes Timing */
         transition: transform 2.5s ease-in-out 0.8s;
     }
 
@@ -292,17 +296,16 @@ body.start-fade .fade-overlay {
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Deine gewünschte Position (-90px damit nichts kollidiert) */
-        transform: translate(-50%, -50%) translateY(-90px) scale(0.9) !important;
+        /* WIEDER ZURÜCK: Auf -150px gesetzt (statt -90px).
+           Jetzt fährt er wieder weit heraus wie am Anfang. */
+        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important; 
         opacity: 1 !important;
         
-        /* PERFORMANCE-BOOST für den Brief */
         will-change: transform, opacity;
         backface-visibility: hidden;
         
-        /* Dein Timing */
         transition: 
             transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
             opacity 0.1s ease-out 0.2s; 
