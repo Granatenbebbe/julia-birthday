@@ -246,60 +246,49 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG (Schmaler & Höher) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V5 (Timing & Fokus angepasst) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis-Position */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* WICHTIG: Wir schauen jetzt auf das obere Drittel (35%), nicht mehr auf den Bauch */
-        transform-origin: center 35% !important; 
+        /* WICHTIG: Fokus noch höher setzen (25%), damit wir die Öffnung sehen */
+        transform-origin: center 25% !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
-        /* Zoom bleibt stark */
         transform: scale(6) !important; 
-        /* Fokus bleibt oben, wo der Brief ist */
-        transform-origin: center 35% !important; 
+        transform-origin: center 25% !important; 
     }
 
-    /* 3. Der Brief - Startzustand (versteckt) */
+    /* 3. Der Brief - Startzustand (versteckt & zentriert) */
     .envelope > .letter {
-        /* Schmaler machen (80% statt 90%) */
         width: 80% !important;
-        
-        /* Position resetten und zentrieren */
         right: auto !important; 
         left: 50% !important;
         bottom: auto !important;
         top: 50% !important;
-        
-        /* Exakt mittig im Umschlag */
         transform: translate(-50%, -50%) !important;
-        
-        /* Liegt HINTER der Tasche */
         z-index: 1 !important; 
         opacity: 0;
     }
 
     /* 4. Der Brief - Endzustand (rausgefahren) */
     .flap .envelope .letter {
-        /* TRICK: Wir kombinieren Zentrierung mit Bewegung nach oben */
-        /* 1. translate(-50%, -50%): Bleibt zentriert */
-        /* 2. translateY(-200px): Fährt ZUSÄTZLICH 200px nach oben (sehr weit!) */
-        /* 3. scale(0.9): Bleibt handlich */
-        transform: translate(-50%, -50%) translateY(-200px) scale(0.9) !important;
+        /* KORREKTUR 1: Weniger weit hoch (-140px statt -200px) */
+        transform: translate(-50%, -50%) translateY(-140px) scale(0.9) !important;
         
-        /* Bleibt hinter der Tasche, sieht natürlicher aus */
         z-index: 1 !important;
-        
         opacity: 1;
         
-        /* Erst losfahren, wenn der Umschlag offen ist */
+        /* KORREKTUR 2: Viel später starten!
+           - Delay auf 2.0s erhöht (Zoom dauert 3.5s, also warten wir länger)
+           - Dauer auf 2.0s erhöht (sanftere Bewegung)
+        */
         transition: 
-            transform 1.5s ease-in-out 1.0s, 
-            opacity 0.5s linear 1.0s;
+            transform 2.0s ease-in-out 2.0s, 
+            opacity 1.0s linear 2.0s;
     }
     
     /* Siegel & Hinweis */
