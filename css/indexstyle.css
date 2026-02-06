@@ -246,47 +246,52 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE KORREKTUR (Zentriert & im Umschlag) --- */
+/* --- FINALE MOBILE OPTIMIERUNG (Schmaler & Höher) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag skalieren */
+    /* 1. Umschlag Basis-Position */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* Zoom-Fokus auf die Mitte setzen */
-        transform-origin: center center !important; 
+        /* WICHTIG: Wir schauen jetzt auf das obere Drittel (35%), nicht mehr auf den Bauch */
+        transform-origin: center 35% !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
-        /* Wir zoomen auf die Mitte */
+        /* Zoom bleibt stark */
         transform: scale(6) !important; 
-        transform-origin: center center !important; 
+        /* Fokus bleibt oben, wo der Brief ist */
+        transform-origin: center 35% !important; 
     }
 
-    /* 3. Der Brief: Position "nullen" und sauber zentrieren */
+    /* 3. Der Brief - Startzustand (versteckt) */
     .envelope > .letter {
-        /* WICHTIG: Desktop-Werte überschreiben, damit er nicht fliegt */
+        /* Schmaler machen (80% statt 90%) */
+        width: 80% !important;
+        
+        /* Position resetten und zentrieren */
         right: auto !important; 
         left: 50% !important;
-        width: 90% !important;
-        bottom: 0 !important;
+        bottom: auto !important;
+        top: 50% !important;
         
-        /* Basis-Position: Horizontal zentriert */
-        transform: translateX(-50%) !important;
+        /* Exakt mittig im Umschlag */
+        transform: translate(-50%, -50%) !important;
         
-        /* Er muss HINTER der Tasche (z-index: 2) bleiben */
+        /* Liegt HINTER der Tasche */
         z-index: 1 !important; 
-        
         opacity: 0;
     }
 
-    /* 4. Die Animation beim Öffnen */
+    /* 4. Der Brief - Endzustand (rausgefahren) */
     .flap .envelope .letter {
-        /* Horizontal zentriert bleiben (translateX -50%) 
-           und vertikal leicht nach oben schieben (translateY -40px) */
-        transform: translateX(-50%) translateY(-40px) scale(0.9) !important;
+        /* TRICK: Wir kombinieren Zentrierung mit Bewegung nach oben */
+        /* 1. translate(-50%, -50%): Bleibt zentriert */
+        /* 2. translateY(-200px): Fährt ZUSÄTZLICH 200px nach oben (sehr weit!) */
+        /* 3. scale(0.9): Bleibt handlich */
+        transform: translate(-50%, -50%) translateY(-200px) scale(0.9) !important;
         
-        /* Immer noch HINTER der Tasche bleiben */
+        /* Bleibt hinter der Tasche, sieht natürlicher aus */
         z-index: 1 !important;
         
         opacity: 1;
