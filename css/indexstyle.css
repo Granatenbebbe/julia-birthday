@@ -246,62 +246,69 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V14 (High Performance) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag Basis */
+    /* 1. Umschlag Basis - Performance-Optimierung */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        transform-origin: center -10% !important; 
+        transform-origin: center -10% !important;
+        
+        /* WICHTIG: Sagt dem Browser, dass sich das gleich bewegt */
+        will-change: transform;
+        /* Schärferes Rendering */
+        backface-visibility: hidden; 
+        -webkit-backface-visibility: hidden;
     }
 
-    /* 2. Zoom beim Öffnen */
+    /* 2. Zoom - SCHATTEN ENTFERNEN! */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
-        transform-origin: center -10% !important; 
+        transform-origin: center -10% !important;
+        
+        /* DAS IST DER FIX: Schatten ausblenden beim Zoomen! 
+           Spart extrem viel Rechenleistung. */
+        box-shadow: none !important; 
     }
 
-    /* 3. Der Brief - Startzustand */
+    /* 3. Der Brief - Startzustand & Hintergrund-Fix */
     .envelope > .letter {
         height: 86% !important; 
-        width: 70% !important;
+        width: 60% !important;
         
         right: auto !important; 
         left: 50% !important;
         bottom: auto !important;
         top: 50% !important;
-        
-        /* Startposition: Exakt mittig */
         transform: translate(-50%, -50%) !important;
         
         z-index: 1 !important; 
         opacity: 0;
+        
+        /* PERFORMANCE: Wir ersetzen die 6 komplexen Gradients durch einen simplen Verlauf.
+           Das sieht am Handy fast gleich aus, läuft aber 10x flüssiger. */
+        background-image: linear-gradient(to bottom, #222, #000) !important;
+        box-shadow: none !important; /* Auch hier Schatten weg */
+        border: 1px solid #333;
 
-        /* WICHTIG: Verhindert Flackern auf Handys */
         will-change: transform, opacity;
-        backface-visibility: hidden;
     }
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Endposition */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* DAS SMOOTHING UPDATE:
-           1. transform: Startet bei 1.5s, aber mit "cubic-bezier".
-              Das bedeutet: Er beschleunigt ganz sanft, statt ruckartig loszufahren.
-           2. opacity: Dauert jetzt 0.6s (statt 0.1s).
-              Der Brief "geistert" langsam rein, statt aufzuploppen.
-        */
+        /* Butterweiches Timing */
         transition: 
             transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s, 
             opacity 0.6s ease-out 0.8s; 
     }
     
-    /* Siegel & Hinweis */
+    /* Siegel & Hinweis - Sofort ausblenden, spart CPU */
     .heart { width: 120px; height: 120px; }
+    .flap .heart { display: none !important; }
     .click-hint { display: none; }
 }
