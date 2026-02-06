@@ -246,51 +246,57 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- MOBILE ANPASSUNGEN (Handy) --- */
+/* --- FINALE MOBILE ANPASSUNGEN (Handy) --- */
 @media screen and (max-width: 768px) {
     
-    /* 1. Umschlag kleiner machen */
+    /* 1. Umschlag skalieren */
     .container > .envelope-wrapper {
         transform: scale(0.7); 
     }
 
-    /* 2. Beim Öffnen extrem zoomen (fürs Handy) */
+    /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(25); 
     }
 
-    /* 3. DER BRIEF-FIX */
+    /* 3. DER BRIEF - JETZT MIT RAKETENANTRIEB */
     .flap .envelope .letter {
-        /* KORREKTUR: Minus-Wert (-60px) damit er nach OBEN rausfährt! */
-        /* Vorher stand hier 20px (das war nach unten/innen) */
-        top: -60px !important; 
+        /* WICHTIG: Wir lösen alle Layout-Bindungen */
+        top: auto !important; 
+        bottom: 0 !important;
         
-        transform: scale(0.5) translateZ(50px) !important;
+        /* DIE MAGIE:
+           1. translateY(-350px): Zieht den Brief brutal weit nach OBEN (Minus = Hoch)
+           2. scale(0.5): Macht ihn klein und handlich
+           3. translateZ(50px): Holt ihn ganz nach vorne
+        */
+        transform: translateY(-350px) scale(0.5) translateZ(50px) !important;
         
-        /* Damit er sicher VOR dem Umschlag liegt */
+        /* Sicherstellen, dass er vorne liegt */
         z-index: 10;
         
-        /* WICHTIG: Die Verzögerungen (Delays) am Ende jeder Zeile:
-           - transform/top: 1.5s warten (bis Lasche offen ist)
-           - opacity: 1.0s warten (langsam einblenden)
-           - z-index: 1.5s warten (erst nach vorne springen, wenn er fährt!) 
+        /* DAS TIMING (Verhindert das Durchblitzen):
+           - Er bewegt sich erst nach 1.5s (wenn der Umschlag offen ist)
+           - Er wird erst nach 1.0s sichtbar
         */
         transition: 
             transform 1.5s ease-in-out 1.5s, 
-            top 1.5s ease-in-out 1.5s,
             opacity 0.5s linear 1.0s,
             z-index 0s linear 1.5s; 
             
         opacity: 1; 
+        
+        /* Damit er sich schön aus der Mitte heraus bewegt */
+        transform-origin: center center;
     }
     
-    /* Im geschlossenen Zustand unsichtbar machen */
+    /* Im geschlossenen Zustand unsichtbar */
     .envelope .letter {
         opacity: 0; 
         transition: opacity 0.1s; 
     }
     
-    /* Siegel & Text Anpassungen */
+    /* Siegel & Text Anpassung für kleine Screens */
     .heart {
         width: 120px; 
         height: 120px;
