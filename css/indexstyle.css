@@ -249,10 +249,15 @@ body.start-fade .fade-overlay {
 /* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag Basis */
+   /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
         transform-origin: center -10% !important; 
+        
+        /* NEU HINZUFÜGEN: Eigene Zeitsteuerung für das Handy */
+        /* Original war: 3.5s Dauer und 1.2s Wartezeit */
+        /* Neu: 2.5s Dauer (etwas schneller) und nur 0.5s Wartezeit */
+        transition: transform 2.5s ease-in-out 0.5s;
     }
 
     /* 2. Zoom beim Öffnen */
