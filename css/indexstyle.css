@@ -246,60 +246,55 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V15 (V13 Optik + Ruckel-Schutz) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        transform-origin: center -10% !important;
-        
-        /* RUCKEL-SCHUTZ: Wir warnen die Grafikkarte vor. 
-           Das macht den Zoom flüssiger, ohne die Optik zu ändern. */
-        will-change: transform;
+        transform-origin: center -10% !important; 
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
         transform-origin: center -10% !important; 
-        /* Wir lassen den Schatten AN, damit es gut aussieht. 
-           Durch 'will-change' oben sollte es trotzdem laufen. */
     }
 
     /* 3. Der Brief - Startzustand */
     .envelope > .letter {
-        /* Abmessungen wie in der guten Version */
         height: 86% !important; 
-        width: 70% !important;
+        width: 60% !important;
         
-        /* Positionierung */
         right: auto !important; 
         left: 50% !important;
         bottom: auto !important;
         top: 50% !important;
+        
+        /* Startposition: Exakt mittig */
         transform: translate(-50%, -50%) !important;
         
         z-index: 1 !important; 
         opacity: 0;
 
-        /* Auch hier: Ruckel-Schutz aktivieren */
+        /* WICHTIG: Verhindert Flackern auf Handys */
         will-change: transform, opacity;
-        
-        /* WICHTIG: Den schönen Hintergrund behalten wir diesmal! */
+        backface-visibility: hidden;
     }
 
     /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Bewegung nach oben (wie in V13) */
+        /* Endposition */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* DAS GUTE TIMING (V13):
-           - Sanfter Start (cubic-bezier) bei 1.5s
-           - Weiches Einblenden (0.6s)
+        /* DAS SMOOTHING UPDATE:
+           1. transform: Startet bei 1.5s, aber mit "cubic-bezier".
+              Das bedeutet: Er beschleunigt ganz sanft, statt ruckartig loszufahren.
+           2. opacity: Dauert jetzt 0.6s (statt 0.1s).
+              Der Brief "geistert" langsam rein, statt aufzuploppen.
         */
         transition: 
             transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s, 
@@ -307,10 +302,6 @@ body.start-fade .fade-overlay {
     }
     
     /* Siegel & Hinweis */
-    .heart { 
-        width: 120px; 
-        height: 120px; 
-        /* Wir lassen es sichtbar! Kein display: none mehr. */
-    }
+    .heart { width: 120px; height: 120px; }
     .click-hint { display: none; }
 }
