@@ -1715,76 +1715,115 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG FÜR FLORES.html --- */
+/* --- FINALE MOBILE OPTIMIERUNG & PERFORMANCE-BOOST V2 --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Die Blumenwiese vergrößern & positionieren */
+    /* 1. POSITIONIERUNG & GRÖSSE (Wie vorher besprochen) */
     .flowers {
-        /* Skaliert die Blumen, damit sie das Handy füllen */
         scale: 1.4; 
-        
-        /* Schiebt sie etwas nach unten, damit die Stängel unten rausgehen */
         bottom: 2vh; 
-        
-        /* Wichtig: Verhindert, dass sie zur Seite rutschen */
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
+        /* Performance: GPU-Layer erzwingen */
+        will-change: transform;
     }
 
-    /* 2. Text-Container anpassen */
+    /* 2. TEXT-ANPASSUNGEN */
     .birthday-message {
-        width: 90%; /* Etwas Abstand zum Rand */
-        top: 40%;   /* Etwas höher, damit es nicht in den Blumen hängt */
-    }
-
-    /* 3. Schriftgrößen anpassen */
-    .birthday-message span {
-        font-size: 3.5rem; /* "Happy Birthday" kleiner */
-        display: inline-block; /* Damit Abstände greifen */
-        line-height: 1.2;
+        width: 90%;
+        top: 35%; /* Etwas höher für mehr Platz */
     }
     
-    /* 4. Der Name "Julia" */
+    .birthday-message span {
+        font-size: 3.5rem;
+        display: inline-block;
+        line-height: 1.2;
+        /* Text-Schatten vereinfachen für Mobile */
+        filter: drop-shadow(2px 2px 0px rgba(0,0,0,1)); 
+    }
+    
     .birthday-message span.name-highlight {
-        font-size: 4.5rem; /* Name etwas größer als der Rest */
-        display: block;    /* Eigene Zeile */
+        font-size: 4.5rem;
+        display: block;
         margin-top: 15px;
-        position: relative; /* Wichtig für die Sonnenblumen */
+        position: relative;
     }
 
-    /* 5. Die Sonnenblumen neben dem Namen */
-    /* Linke Blume */
+    /* Sonnenblumen am Namen */
     .birthday-message span.name-highlight::before {
         font-size: 2.2rem;
-        left: -10px;        /* Näher ran holen */
-        top: -40px;         /* Über den Namen setzen statt daneben (platzsparend) */
+        left: -10px;
+        top: -40px;
         transform: rotate(-20deg);
     }
-
-    /* Rechte Blume */
     .birthday-message span.name-highlight::after {
         font-size: 2.2rem;
-        right: -10px;       /* Näher ran holen */
-        top: -40px;         /* Über den Namen setzen */
+        right: -10px;
+        top: -40px;
         transform: rotate(20deg);
     }
-    
-    /* Optional: Falls du die Blumen lieber NEBEN dem Namen willst (wenn Name kurz ist):
-       Kommentiere oben "top: -40px" aus und nutze das hier:
-    */
-    /*
-    .birthday-message span.name-highlight::before { left: -40px; top: 55%; }
-    .birthday-message span.name-highlight::after { right: -40px; top: 55%; }
-    */
 
-    /* 6. Hintergrund fixieren (gegen Adressleisten-Springen) */
+    /* --- AB HIER: DER ANTI-LAG FIX --- */
+
+    /* 3. SCHATTEN DEAKTIVIEREN (Der Hauptgrund für das Ruckeln!) */
+    .flower__leaf, 
+    .flower__line, 
+    .flower__line__leaf,
+    .flower__g-front__leaf,
+    .flower__g-fr__leaf,
+    .long-g .leaf {
+        /* Schatten auf Handy komplett ausblenden. 
+           Man sieht den Unterschied auf dem kleinen Screen kaum, 
+           aber es spart enorme Rechenleistung. */
+        box-shadow: none !important;
+        background-image: none !important; /* Verläufe reduzieren */
+        
+        /* Fallback-Farbe setzen, falls durch background-image none alles weg ist */
+        background-color: #1aaa15; 
+    }
+    
+    /* Blütenblätter Farbe wiederherstellen (da wir background-image oben entfernt haben) */
+    .flower__leaf {
+        /* Hier nutzen wir einfache Farben statt schwerer Verläufe */
+        background-image: linear-gradient(to top, inherit, inherit) !important;
+    }
+    /* Manuelle Farben-Korrektur für die Blüten, damit sie bunt bleiben */
+    .flower--1 .flower__leaf { background: #fce700 !important; }
+    .flower--2 .flower__leaf { background: #ff6bcb !important; }
+    .flower--3 .flower__leaf { background: #a55eea !important; }
+    .flower--4 .flower__leaf { background: #ff5252 !important; }
+    .flower--5 .flower__leaf { background: #ff9f43 !important; }
+    .flower--6 .flower__leaf { background: #54a0ff !important; }
+    .flower--7 .flower__leaf { background: #f5f6fa !important; }
+
+    /* 4. HARDWARE-BESCHLEUNIGUNG (GPU einschalten) */
+    .flower, 
+    .flower__line, 
+    .flower__leafs {
+        /* Sagt dem Browser: "Achtung, das bewegt sich gleich!" */
+        will-change: transform;
+        /* Zwingt Rendering auf die Grafikkarte */
+        transform: translateZ(0); 
+    }
+
+    /* 5. HINTERGRUND VEREINFACHEN */
     .night {
         height: 120vh;
         position: fixed;
+        /* Den Blur-Effekt entfernen, der ist sehr teuer */
+        filter: none !important;
+        /* Hintergrund fixieren, damit er beim Scrollen nicht neu berechnet wird */
+        background-attachment: fixed;
     }
     
-    /* 7. Gras-Overlay ausblenden (stört oft auf Handy) */
+    /* 6. UNWICHTIGES AUSBLENDEN */
+    /* Die Glühwürmchen/Lichter ziehen viel Leistung -> Weg damit oder reduzieren */
+    .flower__light {
+        display: none !important; 
+    }
+    
+    /* Gras-Overlay weg (wie gehabt) */
     .flower__grass .flower__grass__overlay {
         display: none !important;
     }
