@@ -287,24 +287,17 @@ body.start-fade .fade-overlay {
         backface-visibility: hidden;
     }
 
-  /* 4. Der Brief - Animation */
+    /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Position beibehalten */
-        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
+        /* KORREKTUR: Von -150px auf -90px reduziert. 
+           Verhindert, dass der Brief zu weit oben "kollidiert" oder rausfliegt. */
+        transform: translate(-50%, -50%) translateY(-90px) scale(0.9) !important;
         
-        /* KORREKTUR: Wieder auf 1, damit er HINTER der Umschlagtasche startet */
         z-index: 1 !important; 
-        
-        /* Er muss voll sichtbar sein */
         opacity: 1 !important;
         
-        /* DAS TIMING-GEHEIMNIS:
-           1. transform: Startet nach 1.0s (fährt raus).
-           2. opacity: Startet schon nach 0.2s (wird sofort "physisch" existent im Umschlag).
-              Dadurch vermeiden wir, dass er "unsichtbar" bleibt. 
-        */
         transition: 
-            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.0s, 
+            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
             opacity 0.1s ease-out 0.2s; 
     }
     /* Siegel & Hinweis */
