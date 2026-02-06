@@ -246,26 +246,23 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V9 (Langer Brief & Kollisions-Fix) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V10 (Timing-Fix gegen Kollision) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag Basis-Position */
+    /* 1. Umschlag Basis & Zoom */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        /* Fokus bleibt oben (-10%) für den perfekten Blickwinkel */
         transform-origin: center -10% !important; 
     }
 
-    /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
         transform-origin: center -10% !important; 
     }
 
-    /* 3. Der Brief - Startzustand */
+    /* 2. Der Brief - Startzustand (Versteckt) */
     .envelope > .letter {
-        /* KORREKTUR: Brief ist jetzt viel länger/höher (95%) */
-        height: 95% !important;
+        height: 95% !important; /* Schön lang */
         width: 80% !important;
         
         right: auto !important; 
@@ -277,25 +274,22 @@ body.start-fade .fade-overlay {
         opacity: 0;
     }
 
-    /* 4. Der Brief - Endzustand */
+    /* 3. Der Brief - Animation (Sichtbar) */
     .flap .envelope .letter {
-        /* KORREKTUR:
-           - translateY(-150px): Da er länger ist, schieben wir ihn etwas weniger weit,
-             sonst schwebt er unten aus dem Umschlag raus.
-           - scale(0.9): Größe bleibt gut lesbar.
-        */
+        /* Bewegung nach oben (-150px) */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* WICHTIG GEGEN KOLLISION:
-           - Delay auf 1.2s erhöht.
-           - Der Brief wartet jetzt kurz, bis die Lasche wirklich offen ist.
+        /* DER FIX: 
+           Wir warten 2.2 Sekunden! 
+           (Die Lasche braucht 0.7s Start + 1.5s Dauer = 2.2s).
+           Erst DANACH darf der Brief sich bewegen.
         */
         transition: 
-            transform 2.0s ease-in-out 1.2s, 
-            opacity 0.5s linear 1.2s;
+            transform 2.0s ease-in-out 2.2s, 
+            opacity 0.5s linear 2.2s;
     }
     
     /* Siegel & Hinweis */
