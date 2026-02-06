@@ -246,63 +246,58 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE ANPASSUNGEN (Handy) --- */
+/* --- FINALE MOBILE REPARATUR (Handy) --- */
 @media screen and (max-width: 768px) {
     
-    /* 1. Umschlag skalieren */
+    /* 1. Umschlag passt perfekt auf den Screen */
     .container > .envelope-wrapper {
-        transform: scale(0.7); 
+        transform: scale(0.8); 
     }
 
-    /* 2. Zoom beim Öffnen */
+    /* 2. Zoom beim Öffnen: 
+       Wir gehen runter auf Scale 3.5 (statt 25). 
+       Das reicht völlig, um den Screen zu füllen, aber hält die Animation sauber. */
     .container > .envelope-wrapper.flap {
-        transform: scale(25); 
+        transform: scale(3.5); 
     }
 
-    /* 3. DER BRIEF - JETZT MIT RAKETENANTRIEB */
+    /* 3. Der Brief: Natürliche Bewegung */
     .flap .envelope .letter {
-        /* WICHTIG: Wir lösen alle Layout-Bindungen */
-        top: auto !important; 
+        /* Wir lösen ihn nicht vom Boden, sondern schieben ihn nur hoch. */
         bottom: 0 !important;
+        top: auto !important;
         
-        /* DIE MAGIE:
-           1. translateY(-350px): Zieht den Brief brutal weit nach OBEN (Minus = Hoch)
-           2. scale(0.5): Macht ihn klein und handlich
-           3. translateZ(50px): Holt ihn ganz nach vorne
+        /* translateY(-120px): Schiebt den Brief so hoch, dass er gut lesbar ist,
+           aber unten noch im "Sack" des Umschlags steckt.
+           scale(0.9): Passt die Größe an.
         */
-        transform: translateY(-350px) scale(0.5) translateZ(50px) !important;
+        transform: translateY(-120px) scale(0.9) !important;
         
-        /* Sicherstellen, dass er vorne liegt */
-        z-index: 10;
+        /* WICHTIG: KEIN z-index mehr! 
+           Dadurch bleibt er hinter der unteren Lasche (Tasche) des Umschlags 
+           und sieht aus, als würde er wirklich herausgleiten. */
+        /* z-index: 10;  <-- GELÖSCHT */
         
-        /* DAS TIMING (Verhindert das Durchblitzen):
-           - Er bewegt sich erst nach 1.5s (wenn der Umschlag offen ist)
-           - Er wird erst nach 1.0s sichtbar
-        */
+        /* Timing: Startet erst, wenn der Umschlag offen ist */
         transition: 
-            transform 1.5s ease-in-out 1.5s, 
-            opacity 0.5s linear 1.0s,
-            z-index 0s linear 1.5s; 
+            transform 1.5s ease-in-out 1.0s, 
+            opacity 0.5s linear 1.0s;
             
         opacity: 1; 
-        
-        /* Damit er sich schön aus der Mitte heraus bewegt */
-        transform-origin: center center;
     }
     
-    /* Im geschlossenen Zustand unsichtbar */
+    /* Im geschlossenen Zustand unsichtbar, damit nichts durchblitzt */
     .envelope .letter {
         opacity: 0; 
         transition: opacity 0.1s; 
     }
-    
-    /* Siegel & Text Anpassung für kleine Screens */
+
+    /* Anpassung für Siegel & Hinweis auf kleinen Screens */
     .heart {
-        width: 120px; 
+        width: 120px;
         height: 120px;
     }
     .click-hint {
-        font-size: 14px; 
-        bottom: -35px;
+        display: none; /* Text stört am Handy nur */
     }
 }
