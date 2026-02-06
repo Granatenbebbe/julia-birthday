@@ -246,12 +246,13 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V10 (Timing-Fix gegen Kollision) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V11 (Sichtbarkeit Fix) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis & Zoom */
     .container > .envelope-wrapper {
         transform: scale(0.7);
+        /* Fokus bleibt oben (-10%) */
         transform-origin: center -10% !important; 
     }
 
@@ -260,9 +261,9 @@ body.start-fade .fade-overlay {
         transform-origin: center -10% !important; 
     }
 
-    /* 2. Der Brief - Startzustand (Versteckt) */
+    /* 2. Der Brief - Startzustand */
     .envelope > .letter {
-        height: 95% !important; /* Schön lang */
+        height: 95% !important; 
         width: 80% !important;
         
         right: auto !important; 
@@ -274,28 +275,24 @@ body.start-fade .fade-overlay {
         opacity: 0;
     }
 
-    /* 3. Der Brief - Animation (Sichtbar) */
+    /* 3. Der Brief - Animation */
     .flap .envelope .letter {
-        /* Bewegung nach oben (-150px) */
+        /* Endposition: Oben rausgeschoben */
         transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
         z-index: 1 !important;
         opacity: 1;
         
-        /* DER FIX: 
-           Wir warten 2.2 Sekunden! 
-           (Die Lasche braucht 0.7s Start + 1.5s Dauer = 2.2s).
-           Erst DANACH darf der Brief sich bewegen.
+        /* DER FIX: Getrennte Zeitpläne!
+           1. transform (Bewegung): Wartet 2.2s (damit Lasche weg ist)
+           2. opacity (Sichtbarkeit): Kommt schon bei 0.6s (sobald Lasche aufgeht)
         */
         transition: 
             transform 2.0s ease-in-out 2.2s, 
-            opacity 0.5s linear 2.2s;
+            opacity 0.1s linear 0.6s; 
     }
     
     /* Siegel & Hinweis */
-    .heart {
-        width: 120px;
-        height: 120px;
-    }
+    .heart { width: 120px; height: 120px; }
     .click-hint { display: none; }
 }
