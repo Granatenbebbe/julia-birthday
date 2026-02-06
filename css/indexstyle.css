@@ -246,58 +246,61 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE REPARATUR (Handy) --- */
+/* --- FINALE MOBILE ANPASSUNGEN V3 --- */
 @media screen and (max-width: 768px) {
     
-    /* 1. Umschlag passt perfekt auf den Screen */
+    /* 1. Umschlag passt auf den Screen (Startzustand) */
     .container > .envelope-wrapper {
-        transform: scale(0.8); 
+        transform: scale(0.7); 
     }
 
-    /* 2. Zoom beim Öffnen: 
-       Wir gehen runter auf Scale 3.5 (statt 25). 
-       Das reicht völlig, um den Screen zu füllen, aber hält die Animation sauber. */
+    /* 2. Zoom beim Öffnen: */
+    /* Wir erhöhen wieder auf 12. Das sorgt für den "Kino-Effekt" und dunklen Hintergrund. */
     .container > .envelope-wrapper.flap {
-        transform: scale(3.5); 
+        transform: scale(12); 
     }
 
-    /* 3. Der Brief: Natürliche Bewegung */
+    /* 3. Der Brief: Muss extrem weit nach oben, um im Zoom sichtbar zu sein */
     .flap .envelope .letter {
-        /* Wir lösen ihn nicht vom Boden, sondern schieben ihn nur hoch. */
         bottom: 0 !important;
         top: auto !important;
         
-        /* translateY(-120px): Schiebt den Brief so hoch, dass er gut lesbar ist,
-           aber unten noch im "Sack" des Umschlags steckt.
-           scale(0.9): Passt die Größe an.
+        /* ERKLÄRUNG DER WERTE:
+           - translateY(-400px): Da wir auf den OBEREN Rand zoomen, muss der Brief 
+             von ganz unten (340px) komplett nach oben geschoben werden.
+           - scale(0.6): Damit der Text bei dem starken Zoom lesbar bleibt.
+           - translateZ(50px): Hilft beim Rendering.
         */
-        transform: translateY(-120px) scale(0.9) !important;
+        transform: translateY(-400px) scale(0.6) translateZ(50px) !important;
         
-        /* WICHTIG: KEIN z-index mehr! 
-           Dadurch bleibt er hinter der unteren Lasche (Tasche) des Umschlags 
-           und sieht aus, als würde er wirklich herausgleiten. */
-        /* z-index: 10;  <-- GELÖSCHT */
+        /* WICHTIG: Damit er ÜBER der offenen Lasche liegt */
+        z-index: 10; 
         
-        /* Timing: Startet erst, wenn der Umschlag offen ist */
+        /* TIMING:
+           - 1.5s warten (Brief bleibt unten bis Umschlag offen ist)
+           - Dann in 1.5s nach oben fahren
+        */
         transition: 
-            transform 1.5s ease-in-out 1.0s, 
-            opacity 0.5s linear 1.0s;
+            transform 1.5s ease-in-out 1.5s, 
+            opacity 0.5s linear 1.0s,
+            z-index 0s linear 1.5s; 
             
         opacity: 1; 
+        transform-origin: center top;
     }
     
-    /* Im geschlossenen Zustand unsichtbar, damit nichts durchblitzt */
+    /* Verstecken bei geschlossenem Umschlag */
     .envelope .letter {
         opacity: 0; 
         transition: opacity 0.1s; 
     }
 
-    /* Anpassung für Siegel & Hinweis auf kleinen Screens */
+    /* Siegel & Hinweis */
     .heart {
         width: 120px;
         height: 120px;
     }
     .click-hint {
-        display: none; /* Text stört am Handy nur */
+        display: none; 
     }
 }
