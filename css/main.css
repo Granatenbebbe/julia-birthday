@@ -1715,28 +1715,23 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE OPTIK-KORREKTUR FÜR HANDY (V3) --- */
+/* --- FINALE OPTIK-KORREKTUR FÜR HANDY (V4 - Big Flowers) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. HINTERGRUND FIXIEREN (Gegen Abschneiden) */
+    /* 1. HINTERGRUND & BASICS */
     body {
-        overflow: hidden; /* Verhindert Scrollbalken */
+        overflow: hidden;
         width: 100vw;
         height: 100vh;
     }
-
-    /* Fix für den Hintergrund: Punkte zurück & Rand weg */
+    
     .night {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw !important;  /* Volle Bildschirmbreite */
-        height: 100vh !important; /* Volle Bildschirmhöhe */
-        
-        /* WICHTIG: Das verhindert das Verschieben nach links! */
-        transform: none !important; 
-        
-        /* Hier ist das Original-Muster (die Punkte) zurück: */
+        width: 100vw !important;
+        height: 100vh !important;
+        transform: none !important;
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1744,33 +1739,33 @@ body {
         transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
-        
-        /* Den Weichzeichner lassen wir weg (filter: none), 
-           damit es trotz des Musters flüssig bleibt. */
         filter: none !important; 
         z-index: -1;
     }
 
-    /* 2. SCHRIFTART RETTEN */
+    /* 2. TEXT ZENTRIEREN */
     .birthday-message {
         width: 100%;
-        top: 25%; /* Etwas höher, damit Platz für die riesigen Blumen ist */
+        /* WICHTIG: Exakt in die Mitte setzen */
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         z-index: 9999;
+        /* Verhindert, dass der Text zu breit wird */
+        padding: 0 20px; 
     }
     
     .birthday-message span {
-        /* Erzwingt die Schreibschrift, falls das Handy eine andere wählen will */
         font-family: 'Send Flowers', cursive !important; 
+        font-size: 3.5rem; /* Größe anpassen, falls nötig */
+        display: inline-block;
         
+        /* Animation */
         opacity: 0; 
         animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
-        font-size: 3.5rem; /* Falls dir das zu klein ist: auf 4rem ändern */
-        display: inline-block;
-        color: #ffbf00; /* Sicherheitsfarbe, falls Gradient nicht lädt */
         
-        /* Der goldene Text-Effekt muss auf Mobile oft neu gesetzt werden */
+        /* Farbe & Stil */
+        color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text;
         background-clip: text;
@@ -1778,75 +1773,70 @@ body {
     }
     
     .birthday-message span.name-highlight {
-        font-family: 'Send Flowers', cursive !important;
-        font-size: 5rem; /* Name noch größer */
+        font-size: 5.5rem; /* Name noch etwas größer */
         display: block;
-        margin-top: 10px;
+        margin-top: 15px;
         position: relative;
         animation-delay: 1.5s !important;
     }
 
-    /* Sonnenblumen wieder richtig positionieren */
+    /* Sonnenblumen neben dem Namen anpassen */
     .birthday-message span.name-highlight::before {
         content: '\1F33B';
-        font-family: "Apple Color Emoji", "Segoe UI Emoji", serif; /* Emoji-Font sicherstellen */
-        font-size: 2.5rem;
+        font-size: 3rem;
         position: absolute;
-        left: 10px; top: -50px; 
+        left: 0px; top: -60px; /* Position korrigiert */
         transform: rotate(-20deg);
         filter: none !important;
         opacity: 1 !important;
     }
     .birthday-message span.name-highlight::after {
         content: '\1F33B';
-        font-family: "Apple Color Emoji", "Segoe UI Emoji", serif;
-        font-size: 2.5rem;
+        font-size: 3rem;
         position: absolute;
-        right: 10px; top: -50px; 
+        right: 0px; top: -60px; /* Position korrigiert */
         transform: rotate(20deg);
         filter: none !important;
         opacity: 1 !important;
     }
 
-    /* 3. BLUMEN RICHTIG GROSS MACHEN */
+    /* 3. BLUMEN RICHTIG GROSS (SCALE 6.0) */
     .flowers {
-        /* Von 1.5 auf 2.3 erhöht! */
-        scale: 8.0 !important; 
+        /* Hier passiert die Magie: 6-fache Vergrößerung */
+        scale: 6.0 !important; 
         
-        /* Positionierung anpassen, damit sie nicht zu hoch rutschen */
-        bottom: 8vh; 
+        /* Tiefer setzen, damit man mehr von den Blüten und weniger Stängel sieht */
+        bottom: 2vh; 
         left: 50%;
+        /* Nur horizontal zentrieren, vertikal regelt 'bottom' */
         transform: translateX(-50%);
+        
         width: 100%;
-        transform-origin: bottom center; /* Wächst vom Boden nach oben */
+        transform-origin: bottom center;
     }
 
-    /* --- DER REST BLEIBT (Performance & Animation) --- */
-    
-    /* Animationen ausschalten für Performance */
+    /* Performance-Optimierungen (Bleiben gleich) */
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf, .flower__g-front, .flower__g-fr {
         animation: none !important;
         transition: none !important;
     }
-
-    /* Schatten weg */
     .flower__leaf, .flower__line, .flower__line__leaf {
         box-shadow: none !important;
         filter: none !important;
     }
 
-    /* Sanftes Einblenden der Blumen */
+    /* Einblenden */
     .flower {
         opacity: 0;
         animation: flowerAppear 2s ease-out forwards !important;
     }
-
-    .flower--1 { animation-delay: 1.0s !important; }
-    .flower--2 { animation-delay: 2.0s !important; }
-    .flower--3 { animation-delay: 3.0s !important; }
-    .flower--4 { animation-delay: 4.0s !important; }
+    /* Staffelung beim Einblenden */
+    .flower--1 { animation-delay: 0.5s !important; }
+    .flower--2 { animation-delay: 1.5s !important; }
+    .flower--3 { animation-delay: 2.5s !important; }
+    .flower--4 { animation-delay: 3.5s !important; }
     
-    /* Rest ausblenden */
+    /* Unnötige Elemente ausblenden */
     .flower--5, .flower--6, .flower--7, .flower__light, .flower__grass { 
         display: none !important; 
     }
