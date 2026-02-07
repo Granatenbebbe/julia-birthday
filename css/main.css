@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V9 - Bouquet Fix) --- */
+/* --- FINALE MOBILE VERSION (V10 - Desktop Look) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1737,11 +1737,12 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT */
+    /* 2. TEXT: Mittig oben */
     .birthday-message {
         position: fixed !important; 
-        top: 18% !important; /* Gute Höhe */
-        left: 50% !important; transform: translate(-50%, -50%) !important;
+        top: 20% !important; 
+        left: 50% !important; 
+        transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
     }
     
@@ -1752,6 +1753,7 @@ body {
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
+        filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
     }
     
     .birthday-message span.name-highlight {
@@ -1769,59 +1771,48 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. STÖRENDES AUSBLENDEN */
+    /* 3. STÖRENDES GRAS AUSBLENDEN */
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
     .flower__g-fr, .long-g, .flower__light, 
     .flower--5, .flower--6, .flower--7, .flower__grass {
         display: none !important;
     }
 
-    /* 4. BLUMEN-CONTAINER */
+    /* 4. BLUMEN: DESKTOP-FORMATIERUNG BEIBEHALTEN & SKALIEREN */
     .flowers {
         position: fixed !important;
-        bottom: 0 !important; left: 50% !important;    
-        width: 100% !important; height: 100% !important;
-        pointer-events: none;
-        transform: translateX(-50%) scale(1.4) !important; /* Scale 1.4 ist sicherer */
+        bottom: 0 !important; 
+        left: 50% !important;
+        
+        /* Wir setzen Breite auf 0, damit 'left: 50%' exakt die Mitte ist */
+        width: 0 !important; 
+        height: 0 !important;
+        
+        /* Zoom 2.8: Groß genug, passt aber in die Breite */
+        transform: scale(2.8) !important; 
+        
         transform-origin: bottom center !important;
         z-index: 10 !important;
+        pointer-events: none;
     }
 
-    /* 5. BLUMEN POSITIONIERUNG (DER FIX) */
-    /* Wir zwingen ALLE Blumen in die Mitte und schieben sie mit Margin leicht auseinander */
-    
+    /* 5. RESET ALLER BLUMEN (WICHTIG!) */
+    /* Hiermit löschen wir alle vorherigen Positionsexperimente. */
+    /* Die Blumen nutzen jetzt wieder ihre originale Desktop-Logik (Rotation) */
     .flower {
-        left: 50% !important; /* Startpunkt Mitte für ALLE */
+        left: 50% !important; /* Alle starten in der Mitte */
+        margin: 0 !important; /* Keine künstlichen Abstände mehr! */
         opacity: 1 !important;
         animation-play-state: running !important;
-        transition: all 1s ease-in-out;
     }
 
-    /* Blume 1 (Gelb) - war ganz links, jetzt holen wir sie ran */
-    .flower--1 { 
-        margin-left: -28vmin !important; /* Nach links schieben */
-        animation-delay: 0.2s !important; 
-    }
+    /* Verzögerungen beibehalten, damit es schön wächst */
+    .flower--1 { animation-delay: 0.2s !important; }
+    .flower--2 { animation-delay: 0.6s !important; }
+    .flower--3 { animation-delay: 1.0s !important; }
+    .flower--4 { animation-delay: 1.4s !important; }
 
-    /* Blume 3 (Lila) - Mitte links */
-    .flower--3 { 
-        margin-left: -10vmin !important; 
-        animation-delay: 0.6s !important; 
-    }
-
-    /* Blume 2 (Pink) - Mitte rechts */
-    .flower--2 { 
-        margin-left: 10vmin !important; 
-        animation-delay: 1.0s !important; 
-    }
-    
-    /* Blume 4 (Rot/Neu) - Rechts außen */
-    .flower--4 { 
-        margin-left: 28vmin !important; /* Nach rechts schieben */
-        animation-delay: 1.4s !important; 
-    }
-
-    /* Animationen müssen laufen */
+    /* Animationen zwingend einschalten */
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
         animation-play-state: running !important;
     }
