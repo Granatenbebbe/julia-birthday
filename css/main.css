@@ -1811,7 +1811,7 @@ body {
     /* 3. BLUMEN RICHTIG GROSS MACHEN */
     .flowers {
         /* Von 1.5 auf 2.3 erhöht! */
-        scale: 4.0 !important; 
+        scale: 8.0 !important; 
         
         /* Positionierung anpassen, damit sie nicht zu hoch rutschen */
         bottom: 8vh; 
