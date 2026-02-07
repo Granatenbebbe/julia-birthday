@@ -1715,14 +1715,15 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG (V5 - Force Update) --- */
-@media screen and (max-width: 1024px) { /* Erhöht auf 1024px für bessere Abdeckung */
+/* --- FINALE MOBILE BALANCE (V6 - Goldilocks) --- */
+@media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND FIXIEREN */
+    /* 1. HINTERGRUND & BASICS */
     body {
         overflow: hidden;
         width: 100vw;
         height: 100vh;
+        position: fixed;
     }
     
     .night {
@@ -1730,7 +1731,6 @@ body {
         top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
-        /* Wir erzwingen das Hintergrundbild erneut */
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1742,67 +1742,75 @@ body {
         z-index: -1;
     }
 
-    /* 2. TEXT NACH OBEN VERSCHIEBEN */
-    /* Damit er nicht in den riesigen Blumen hängt, schieben wir ihn auf 25% Höhe */
+    /* 2. TEXT: WEITER OBEN & GRÖSSER */
     .birthday-message {
-        width: 100%;
-        top: 25% !important; /* WICHTIG: Weiter oben positionieren */
+        position: fixed !important; 
+        top: 15% !important; /* Weiter nach oben (vorher 30%), damit Platz für Blumen ist */
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        z-index: 9999;
-        padding: 0 10px;
+        width: 100% !important;
+        text-align: center !important;
+        z-index: 99999;
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        font-size: 3.5rem; 
+        font-size: 4rem; /* Etwas größer für bessere Lesbarkeit */
         display: inline-block;
-        white-space: nowrap; /* Verhindert Umbruch */
+        white-space: nowrap;
         
         opacity: 0; 
         animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
         
+        color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        color: #ffbf00;
+        /* Schatten verstärken, damit es sich vom Hintergrund abhebt */
+        filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
     }
     
     .birthday-message span.name-highlight {
-        font-size: 5rem;
+        font-size: 6rem; /* Name deutlich größer */
         display: block;
-        margin-top: 5px;
+        margin-top: 10px;
         position: relative;
     }
 
-    /* Sonnenblumen Positionierung */
+    /* Sonnenblumen neben dem Namen */
     .birthday-message span.name-highlight::before {
         content: '\1F33B';
-        font-size: 2.5rem;
+        font-size: 3rem;
         position: absolute;
-        left: -10px; top: -40px; 
+        left: 10px; top: -50px; 
         transform: rotate(-20deg);
         filter: none !important; opacity: 1 !important;
+        -webkit-text-fill-color: initial !important;
     }
     .birthday-message span.name-highlight::after {
         content: '\1F33B';
-        font-size: 2.5rem;
+        font-size: 3rem;
         position: absolute;
-        right: -10px; top: -40px; 
+        right: 10px; top: -50px; 
         transform: rotate(20deg);
         filter: none !important; opacity: 1 !important;
+        -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. BLUMEN VERGRÖSSERN (Der wichtigste Teil) */
+    /* 3. BLUMEN: MITTELGROSS (Faktor 2.1) */
     .flowers {
-        /* Wir kombinieren Position und Zoom in einem Befehl, damit nichts überschrieben wird */
-        transform: translateX(-50%) scale(3.5) !important; 
+        position: fixed !important;
+        bottom: 0vh !important;
+        left: 50% !important;    
+        width: 0 !important; /* Trick für Zentrierung bleibt */
+        height: 0 !important;
         
-        bottom: 5vh !important; 
-        left: 50% !important;
-        width: 100%;
+        /* Hier ist die Korrektur: Von 4.0 auf 2.1 reduziert */
+        transform: scale(2.1) !important; 
         transform-origin: bottom center !important;
+        
+        z-index: 10 !important;
     }
 
     /* Animationen ausschalten für Performance */
@@ -1812,23 +1820,24 @@ body {
         box-shadow: none !important;
     }
 
-    /* Einblenden */
+    /* Einblenden der Blumen */
     .flower {
         opacity: 0;
-        animation: flowerAppear 2s ease-out forwards !important;
+        animation: flowerAppear 2.5s ease-out forwards !important;
     }
-    .flower--1 { animation-delay: 0.5s !important; }
-    .flower--2 { animation-delay: 1.0s !important; }
-    .flower--3 { animation-delay: 1.5s !important; }
-    .flower--4 { animation-delay: 2.0s !important; }
+    /* Leicht verzögert, damit es edel wirkt */
+    .flower--1 { animation-delay: 0.2s !important; }
+    .flower--2 { animation-delay: 0.6s !important; }
+    .flower--3 { animation-delay: 1.0s !important; }
+    .flower--4 { animation-delay: 1.4s !important; }
     
-    /* Überflüssiges ausblenden */
+    /* Unnötiges ausblenden */
     .flower--5, .flower--6, .flower--7, .flower__light, .flower__grass { 
         display: none !important; 
     }
 
     @keyframes flowerAppear {
-        0% { opacity: 0; transform: scale(0.5); }
+        0% { opacity: 0; transform: scale(0.6); }
         100% { opacity: 1; transform: scale(1); }
     }
     
