@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V13 - Full Nature) --- */
+/* --- FINALE MOBILE VERSION (V14 - Big Text & Attached Emojis) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1737,18 +1737,22 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT */
+    /* 2. TEXT - GRÖSSER & KOMPAKT */
     .birthday-message {
         position: fixed !important; 
         top: 15% !important; 
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
+        /* Verhindert, dass der Text zu breit wird und Umbrüche erzeugt */
+        white-space: nowrap; 
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        font-size: 3.5rem; display: inline-block; white-space: nowrap;
+        /* Hier vergrößert: Von 3.5 auf 4.5rem */
+        font-size: 4.5rem; 
+        display: inline-block; 
         color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
@@ -1756,29 +1760,49 @@ body {
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
     }
     
+    /* Der Name "Julia" */
     .birthday-message span.name-highlight {
-        font-size: 5.5rem; display: block; margin-top: 10px; position: relative;
+        /* Hier vergrößert: Von 5.5 auf 7rem */
+        font-size: 7rem; 
+        
+        /* WICHTIG: inline-block sorgt dafür, dass der Kasten nur so breit ist wie das Wort. */
+        display: inline-block !important; 
+        
+        margin-top: 15px; 
+        position: relative;
     }
     
+    /* Sonnenblumen - jetzt relativ zum schmalen Kasten positioniert */
     .birthday-message span.name-highlight::before {
-        content: '\1F33B'; font-size: 2.8rem; position: absolute;
-        left: 0px; top: -50px; transform: rotate(-20deg);
+        content: '\1F33B'; 
+        font-size: 3.5rem; 
+        position: absolute;
+        /* Links vom Wort "Julia" */
+        left: -65px; 
+        /* Vertikal mittig zum Namen */
+        top: 50%; 
+        transform: translateY(-50%) rotate(-20deg);
+        
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
+
     .birthday-message span.name-highlight::after {
-        content: '\1F33B'; font-size: 2.8rem; position: absolute;
-        right: 0px; top: -50px; transform: rotate(20deg);
+        content: '\1F33B'; 
+        font-size: 3.5rem; 
+        position: absolute;
+        /* Rechts vom Wort "Julia" */
+        right: -65px; 
+        /* Vertikal mittig */
+        top: 50%; 
+        transform: translateY(-50%) rotate(20deg);
+        
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. GRAS & BLÄTTER WIEDERHERGESTELLT */
-    /* Wir verstecken nur die störenden "Fireflies" (Lichter), falls gewünscht. 
-       Gras (.growing-grass etc.) ist jetzt wieder sichtbar! */
-    .flower__light {
-        display: none !important; /* Lichter aus, falls zu unruhig. Sonst löschen. */
-    }
+    /* 3. GRAS & BLÄTTER ANZEIGEN */
+    /* Lichter aus, Rest an */
+    .flower__light { display: none !important; }
 
-    /* Sicherheitsmaßnahme: Falls irgendwo global display:none gesetzt war */
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
     .flower__g-fr, .long-g, .flower__grass {
         display: block !important;
@@ -1786,11 +1810,10 @@ body {
         visibility: visible !important;
     }
 
-    /* 4. BLUMEN-CONTAINER */
+    /* 4. BLUMEN (Zoom 1.7 beibehalten) */
     .flowers {
         position: fixed !important;
-        bottom: 2vh !important; 
-        left: 50% !important;
+        bottom: 2vh !important; left: 50% !important;
         width: 0 !important; height: 0 !important;
         transform: scale(1.7) !important; 
         transform-origin: bottom center !important;
@@ -1798,16 +1821,12 @@ body {
         pointer-events: none;
     }
 
-    /* 5. BLUMEN & GRAS ANIMATIONEN AKTIVIEREN */
+    /* 5. ANIMATIONEN STARTEN */
     .flower {
-        left: 50% !important; 
-        margin: 0 !important; 
-        opacity: 1 !important;
-        animation-play-state: running !important;
-        display: block !important;
+        left: 50% !important; margin: 0 !important; opacity: 1 !important;
+        animation-play-state: running !important; display: block !important;
     }
 
-    /* Verzögerungen für die Blumen */
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
@@ -1816,7 +1835,6 @@ body {
     .flower--6 { animation-delay: 2.2s !important; }
     .flower--7 { animation-delay: 2.6s !important; }
 
-    /* Damit sich ALLES bewegt (Blumen + Gras) */
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf,
     .flower__grass, .flower__g-long, .flower__g-right, .flower__g-front {
         animation-play-state: running !important;
