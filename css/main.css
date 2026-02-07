@@ -1715,10 +1715,10 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V7 - Clean & Big) --- */
+/* --- FINALE MOBILE VERSION (V8 - Animated & Balanced) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND & SCROLL-STOPP */
+    /* 1. HINTERGRUND FIXIEREN */
     body {
         overflow: hidden;
         width: 100vw; height: 100vh;
@@ -1740,10 +1740,10 @@ body {
         z-index: -1;
     }
 
-    /* 2. TEXT */
+    /* 2. TEXT: Mittig und gut lesbar */
     .birthday-message {
         position: fixed !important; 
-        top: 15% !important; 
+        top: 20% !important; /* Gute Höhe über den Blumen */
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         width: 100% !important;
@@ -1753,75 +1753,71 @@ body {
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        font-size: 4rem; 
+        font-size: 3.5rem; 
         display: inline-block;
         white-space: nowrap;
-        opacity: 0; 
-        animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
         color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
+        /* Animation wieder an: */
+        animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
     }
     
     .birthday-message span.name-highlight {
-        font-size: 6rem; 
+        font-size: 5.5rem; 
         display: block;
         margin-top: 10px;
         position: relative;
     }
     
+    /* Sonnenblumen */
     .birthday-message span.name-highlight::before {
-        content: '\1F33B'; font-size: 3rem; position: absolute;
-        left: 10px; top: -50px; transform: rotate(-20deg);
+        content: '\1F33B'; font-size: 2.8rem; position: absolute;
+        left: 0px; top: -50px; transform: rotate(-20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
     .birthday-message span.name-highlight::after {
-        content: '\1F33B'; font-size: 3rem; position: absolute;
-        right: 10px; top: -50px; transform: rotate(20deg);
+        content: '\1F33B'; font-size: 2.8rem; position: absolute;
+        right: 0px; top: -50px; transform: rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. ALLES STÖRENDE GRAS AUSBLENDEN (WICHTIG!) */
-    /* Das hier entfernt den grünen Matsch aus dem Vordergrund */
+    /* 3. STÖRENDES GRAS WEG */
+    /* Wir blenden das dicke Gras aus, aber lassen die Blumen (flower) da */
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
     .flower__g-fr, .long-g, .flower__light, 
     .flower--5, .flower--6, .flower--7, .flower__grass {
         display: none !important;
     }
 
-    /* 4. BLUMEN: GROSS & SAUBER */
+    /* 4. BLUMEN: ANIMIERT & SKALIERT */
     .flowers {
         position: fixed !important;
-        bottom: 5vh !important; /* Ein Stück vom Rand weg */
+        bottom: 0 !important;
         left: 50% !important;    
-        width: 0 !important; 
-        height: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        pointer-events: none;
         
-        /* Zoom auf 2.3 - Groß, aber passt auf den Screen */
-        transform: scale(2.3) !important; 
+        /* 1.5 ist der perfekte Zoom für Mobile */
+        transform: translateX(-50%) scale(1.5) !important; 
         transform-origin: bottom center !important;
         z-index: 10 !important;
     }
 
-    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
-        animation: none !important; transition: none !important; box-shadow: none !important;
+    /* WICHTIG: Animationen erzwingen! */
+    .flower, .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
+        animation-play-state: running !important;
+        /* Wir stellen sicher, dass keine "none" Regel gewinnt */
+        transition: all 1s ease-in-out; 
     }
-
+    
+    /* Hier definieren wir, dass sie sichtbar werden */
     .flower {
-        opacity: 0;
-        animation: flowerAppear 2s ease-out forwards !important;
+        opacity: 1 !important; /* Sofort sichtbar, Animation regelt den Rest */
     }
-    .flower--1 { animation-delay: 0.2s !important; }
-    .flower--2 { animation-delay: 0.6s !important; }
-    .flower--3 { animation-delay: 1.0s !important; }
-    .flower--4 { animation-delay: 1.4s !important; }
 
-    @keyframes flowerAppear {
-        0% { opacity: 0; transform: scale(0.6); }
-        100% { opacity: 1; transform: scale(1); }
-    }
     @keyframes simpleFadeIn { to { opacity: 1; } }
 }
