@@ -1715,10 +1715,10 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V10 - Desktop Look) --- */
+/* --- FINALE MOBILE VERSION (V11 - Perfekter Zoom) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND & BASICS */
+    /* 1. HINTERGRUND FIXIEREN */
     body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
@@ -1737,10 +1737,10 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT: Mittig oben */
+    /* 2. TEXT: Etwas höher (15%) */
     .birthday-message {
         position: fixed !important; 
-        top: 20% !important; 
+        top: 15% !important; /* War 20%, jetzt höher für mehr Platz */
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
@@ -1778,41 +1778,36 @@ body {
         display: none !important;
     }
 
-    /* 4. BLUMEN: DESKTOP-FORMATIERUNG BEIBEHALTEN & SKALIEREN */
+    /* 4. BLUMEN: ZOOM ANGEPASST */
     .flowers {
         position: fixed !important;
-        bottom: 0 !important; 
+        bottom: 2vh !important; /* Leicht vom Boden angehoben */
         left: 50% !important;
         
-        /* Wir setzen Breite auf 0, damit 'left: 50%' exakt die Mitte ist */
         width: 0 !important; 
         height: 0 !important;
         
-        /* Zoom 2.8: Groß genug, passt aber in die Breite */
-        transform: scale(2.8) !important; 
+        /* HIER IST DIE ÄNDERUNG: Von 2.8 auf 1.7 reduziert */
+        transform: scale(1.7) !important; 
         
         transform-origin: bottom center !important;
         z-index: 10 !important;
         pointer-events: none;
     }
 
-    /* 5. RESET ALLER BLUMEN (WICHTIG!) */
-    /* Hiermit löschen wir alle vorherigen Positionsexperimente. */
-    /* Die Blumen nutzen jetzt wieder ihre originale Desktop-Logik (Rotation) */
+    /* 5. RESET: Desktop-Look beibehalten */
     .flower {
-        left: 50% !important; /* Alle starten in der Mitte */
-        margin: 0 !important; /* Keine künstlichen Abstände mehr! */
+        left: 50% !important; 
+        margin: 0 !important; 
         opacity: 1 !important;
         animation-play-state: running !important;
     }
 
-    /* Verzögerungen beibehalten, damit es schön wächst */
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
     .flower--4 { animation-delay: 1.4s !important; }
 
-    /* Animationen zwingend einschalten */
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
         animation-play-state: running !important;
     }
