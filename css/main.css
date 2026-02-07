@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V14 - Big Text & Attached Emojis) --- */
+/* --- FINALE MOBILE VERSION (V15 - Riesig & Höher) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1737,21 +1737,21 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT - GRÖSSER & KOMPAKT */
+    /* 2. TEXT - HÖHER & RIESIG */
     .birthday-message {
         position: fixed !important; 
-        top: 15% !important; 
+        /* HIER GEÄNDERT: Von 15% auf 12% (weiter nach oben) */
+        top: 12% !important; 
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
-        /* Verhindert, dass der Text zu breit wird und Umbrüche erzeugt */
         white-space: nowrap; 
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        /* Hier vergrößert: Von 3.5 auf 4.5rem */
-        font-size: 4.5rem; 
+        /* HIER GEÄNDERT: Von 4.5rem auf 5.5rem */
+        font-size: 5.5rem; 
         display: inline-block; 
         color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
@@ -1760,47 +1760,37 @@ body {
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
     }
     
-    /* Der Name "Julia" */
     .birthday-message span.name-highlight {
-        /* Hier vergrößert: Von 5.5 auf 7rem */
-        font-size: 7rem; 
+        /* HIER GEÄNDERT: Von 7rem auf 8.5rem */
+        font-size: 8.5rem; 
         
-        /* WICHTIG: inline-block sorgt dafür, dass der Kasten nur so breit ist wie das Wort. */
         display: inline-block !important; 
-        
         margin-top: 15px; 
         position: relative;
     }
     
-    /* Sonnenblumen - jetzt relativ zum schmalen Kasten positioniert */
+    /* Sonnenblumen - Abstand angepasst für die größere Schrift */
     .birthday-message span.name-highlight::before {
         content: '\1F33B'; 
-        font-size: 3.5rem; 
+        font-size: 4rem; /* Größer */
         position: absolute;
-        /* Links vom Wort "Julia" */
-        left: -65px; 
-        /* Vertikal mittig zum Namen */
+        left: -80px; /* Mehr Abstand (war -65px) */
         top: 50%; 
         transform: translateY(-50%) rotate(-20deg);
-        
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
     .birthday-message span.name-highlight::after {
         content: '\1F33B'; 
-        font-size: 3.5rem; 
+        font-size: 4rem; /* Größer */
         position: absolute;
-        /* Rechts vom Wort "Julia" */
-        right: -65px; 
-        /* Vertikal mittig */
+        right: -80px; /* Mehr Abstand (war -65px) */
         top: 50%; 
         transform: translateY(-50%) rotate(20deg);
-        
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. GRAS & BLÄTTER ANZEIGEN */
-    /* Lichter aus, Rest an */
+    /* 3. REST WIE GEHABT (GRAS & BLÄTTER AN) */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
@@ -1810,7 +1800,7 @@ body {
         visibility: visible !important;
     }
 
-    /* 4. BLUMEN (Zoom 1.7 beibehalten) */
+    /* 4. BLUMEN (Zoom 1.7) */
     .flowers {
         position: fixed !important;
         bottom: 2vh !important; left: 50% !important;
