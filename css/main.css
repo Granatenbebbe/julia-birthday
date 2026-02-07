@@ -1715,10 +1715,10 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V11 - Perfekter Zoom) --- */
+/* --- FINALE MOBILE VERSION (V12 - Alle 7 Blumen) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND FIXIEREN */
+    /* 1. HINTERGRUND & BASICS */
     body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
@@ -1737,10 +1737,10 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT: Etwas höher (15%) */
+    /* 2. TEXT */
     .birthday-message {
         position: fixed !important; 
-        top: 15% !important; /* War 20%, jetzt höher für mehr Platz */
+        top: 15% !important; 
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
@@ -1772,41 +1772,43 @@ body {
     }
 
     /* 3. STÖRENDES GRAS AUSBLENDEN */
+    /* HIER IST DIE ÄNDERUNG: flower--5, 6, 7 sind hier NICHT mehr drin */
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
-    .flower__g-fr, .long-g, .flower__light, 
-    .flower--5, .flower--6, .flower--7, .flower__grass {
+    .flower__g-fr, .long-g, .flower__light, .flower__grass {
         display: none !important;
     }
 
-    /* 4. BLUMEN: ZOOM ANGEPASST */
+    /* 4. BLUMEN-CONTAINER (Zoom 1.7) */
     .flowers {
         position: fixed !important;
-        bottom: 2vh !important; /* Leicht vom Boden angehoben */
+        bottom: 2vh !important; 
         left: 50% !important;
-        
-        width: 0 !important; 
-        height: 0 !important;
-        
-        /* HIER IST DIE ÄNDERUNG: Von 2.8 auf 1.7 reduziert */
+        width: 0 !important; height: 0 !important;
         transform: scale(1.7) !important; 
-        
         transform-origin: bottom center !important;
         z-index: 10 !important;
         pointer-events: none;
     }
 
-    /* 5. RESET: Desktop-Look beibehalten */
+    /* 5. ALLE BLUMEN AKTIVIEREN */
     .flower {
         left: 50% !important; 
         margin: 0 !important; 
         opacity: 1 !important;
         animation-play-state: running !important;
+        /* Falls sie standardmäßig ausgeblendet waren, zeigen wir sie jetzt: */
+        display: block !important; 
     }
 
+    /* Verzögerungen für ALLE 7 Blumen */
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
     .flower--4 { animation-delay: 1.4s !important; }
+    /* Die neuen: */
+    .flower--5 { animation-delay: 1.8s !important; }
+    .flower--6 { animation-delay: 2.2s !important; }
+    .flower--7 { animation-delay: 2.6s !important; }
 
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
         animation-play-state: running !important;
