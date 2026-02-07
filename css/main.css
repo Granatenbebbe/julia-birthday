@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V15 - Riesig & Höher) --- */
+/* --- FINALE MOBILE VERSION (V16 - Perfektes Timing) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1737,10 +1737,9 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT - HÖHER & RIESIG */
+    /* 2. TEXT - RIESIG & SPÄTER */
     .birthday-message {
         position: fixed !important; 
-        /* HIER GEÄNDERT: Von 15% auf 12% (weiter nach oben) */
         top: 12% !important; 
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
@@ -1748,49 +1747,54 @@ body {
         white-space: nowrap; 
     }
     
+    /* Basis-Stil für alle Textteile */
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        /* HIER GEÄNDERT: Von 4.5rem auf 5.5rem */
         font-size: 5.5rem; 
         display: inline-block; 
         color: #ffbf00;
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-        animation: simpleFadeIn 2s ease-out forwards 0.5s !important;
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
+        opacity: 0; /* Startet unsichtbar */
+        
+        /* HIER IST DER FIX: Keine feste Verzögerung mehr im Shorthand! */
+        animation: simpleFadeIn 2s ease-out forwards !important; 
+    }
+
+    /* HIER DAS TIMING WIEDERHERSTELLEN (Wie Desktop) */
+    /* "Happy" */
+    .birthday-message span:nth-child(1) {
+        animation-delay: 6s !important;
+    }
+    /* "Birthday" */
+    .birthday-message span:nth-child(2) {
+        animation-delay: 6.5s !important;
     }
     
+    /* "Julia" & Sonnenblumen */
     .birthday-message span.name-highlight {
-        /* HIER GEÄNDERT: Von 7rem auf 8.5rem */
         font-size: 8.5rem; 
-        
         display: inline-block !important; 
         margin-top: 15px; 
         position: relative;
+        /* Spätestes Erscheinen */
+        animation-delay: 7s !important; 
     }
     
-    /* Sonnenblumen - Abstand angepasst für die größere Schrift */
     .birthday-message span.name-highlight::before {
-        content: '\1F33B'; 
-        font-size: 4rem; /* Größer */
-        position: absolute;
-        left: -80px; /* Mehr Abstand (war -65px) */
-        top: 50%; 
-        transform: translateY(-50%) rotate(-20deg);
+        content: '\1F33B'; font-size: 4rem; position: absolute;
+        left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
     .birthday-message span.name-highlight::after {
-        content: '\1F33B'; 
-        font-size: 4rem; /* Größer */
-        position: absolute;
-        right: -80px; /* Mehr Abstand (war -65px) */
-        top: 50%; 
-        transform: translateY(-50%) rotate(20deg);
+        content: '\1F33B'; font-size: 4rem; position: absolute;
+        right: -80px; top: 50%; transform: translateY(-50%) rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. REST WIE GEHABT (GRAS & BLÄTTER AN) */
+    /* 3. GRAS & BLÄTTER AN */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
