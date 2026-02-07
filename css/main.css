@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V12 - Alle 7 Blumen) --- */
+/* --- FINALE MOBILE VERSION (V13 - Full Nature) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1771,14 +1771,22 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 3. STÖRENDES GRAS AUSBLENDEN */
-    /* HIER IST DIE ÄNDERUNG: flower--5, 6, 7 sind hier NICHT mehr drin */
-    .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
-    .flower__g-fr, .long-g, .flower__light, .flower__grass {
-        display: none !important;
+    /* 3. GRAS & BLÄTTER WIEDERHERGESTELLT */
+    /* Wir verstecken nur die störenden "Fireflies" (Lichter), falls gewünscht. 
+       Gras (.growing-grass etc.) ist jetzt wieder sichtbar! */
+    .flower__light {
+        display: none !important; /* Lichter aus, falls zu unruhig. Sonst löschen. */
     }
 
-    /* 4. BLUMEN-CONTAINER (Zoom 1.7) */
+    /* Sicherheitsmaßnahme: Falls irgendwo global display:none gesetzt war */
+    .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
+    .flower__g-fr, .long-g, .flower__grass {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* 4. BLUMEN-CONTAINER */
     .flowers {
         position: fixed !important;
         bottom: 2vh !important; 
@@ -1790,27 +1798,27 @@ body {
         pointer-events: none;
     }
 
-    /* 5. ALLE BLUMEN AKTIVIEREN */
+    /* 5. BLUMEN & GRAS ANIMATIONEN AKTIVIEREN */
     .flower {
         left: 50% !important; 
         margin: 0 !important; 
         opacity: 1 !important;
         animation-play-state: running !important;
-        /* Falls sie standardmäßig ausgeblendet waren, zeigen wir sie jetzt: */
-        display: block !important; 
+        display: block !important;
     }
 
-    /* Verzögerungen für ALLE 7 Blumen */
+    /* Verzögerungen für die Blumen */
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
     .flower--4 { animation-delay: 1.4s !important; }
-    /* Die neuen: */
     .flower--5 { animation-delay: 1.8s !important; }
     .flower--6 { animation-delay: 2.2s !important; }
     .flower--7 { animation-delay: 2.6s !important; }
 
-    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf {
+    /* Damit sich ALLES bewegt (Blumen + Gras) */
+    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf,
+    .flower__grass, .flower__g-long, .flower__g-right, .flower__g-front {
         animation-play-state: running !important;
     }
 
