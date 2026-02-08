@@ -1715,33 +1715,35 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V18 - High Quality Text & Fast Background) --- */
+/* --- FINALE MOBILE VERSION (V19 - Original Look & Performance) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. PERFORMANCE-RETTUNG: HINTERGRUND VEREINFACHEN */
-    /* Das ist der Schlüssel! Wir schalten das komplexe Muster aus. */
+    /* 1. HINTERGRUND: ORIGINAL-LOOK (OHNE BLUR) */
     .night {
         position: fixed; top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
         z-index: -1;
         
-        /* WICHTIG: Das alte 'background-image' mit den vielen Linien löschen */
-        background-image: none !important;
+        /* WICHTIG: Das ist der ORIGINAL-Hintergrund vom Desktop */
+        background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
+        radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
+        repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
+        transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, 
+        transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
+        rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
+        rgb(240, 240, 240)) !important;
         
-        /* Neuer, schneller Hintergrund: Ein simpler, schöner Nacht-Verlauf */
-        background: radial-gradient(circle at center bottom, #112035 0%, #000000 80%) !important;
-        
-        /* Filter ausschalten, spart Rechenleistung */
+        /* PERFORMANCE-FIX: Wir schalten nur den Weichzeichner aus! */
         filter: none !important; 
     }
 
-    /* 2. BASICS FIXIEREN */
+    /* 2. BASICS */
     body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 3. TEXT - ZURÜCK ZUR VOLLEN QUALITÄT */
+    /* 3. TEXT - WIEDER HOCHWERTIG (GOLD VERLAUF) */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1749,10 +1751,8 @@ body {
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
-        pointer-events: none; 
-        
-        /* Hilft dem Browser, die Ebene separat zu berechnen */
-        will-change: transform, opacity;
+        pointer-events: none;
+        will-change: opacity; /* Hilft dem Handy */
     }
     
     .birthday-message span {
@@ -1760,23 +1760,22 @@ body {
         font-size: 5.5rem; 
         display: inline-block; 
         
-        /* --- HIER WIEDER DER HOCHWERTIGE LOOK (wie V16) --- */
-        color: #ffbf00; /* Fallback */
+        /* Der schöne Gold-Verlauf ist zurück */
+        color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; 
         background-clip: text; 
         -webkit-text-fill-color: transparent;
         
-        /* Drop-Shadow sieht besser aus als Text-Shadow, kostet aber Leistung.
-           Da wir den Hintergrund optimiert haben, können wir uns das jetzt leisten! */
+        /* Schatten wieder an */
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
 
         opacity: 0; 
-        /* Animation wieder mit richtigem Timing */
+        /* Originales Timing (langsam einblenden) */
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* ORIGINAL TIMING (Erst Blumen, dann Text) */
+    /* Timing wie beim Desktop */
     .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
     .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
@@ -1791,7 +1790,7 @@ body {
     .birthday-message span.name-highlight::before {
         content: '\1F33B'; font-size: 4rem; position: absolute;
         left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
-        /* Filter hier aus, Emojis brauchen keinen Schatten, das spart viel Leistung */
+        /* Filter hier aus lassen für Performance, fällt kaum auf */
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
@@ -1801,8 +1800,8 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 4. BLUMEN & NATUR (Wie gehabt) */
-    .flower__light { display: none !important; } /* Lichter aus zur Sicherheit */
+    /* 4. BLUMEN & NATUR (Bleibt alles an) */
+    .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
     .flower__g-fr, .long-g, .flower__grass {
@@ -1817,7 +1816,7 @@ body {
         transform-origin: bottom center !important;
         z-index: 10 !important;
         pointer-events: none;
-        will-change: transform; /* Performance Boost */
+        will-change: transform;
     }
 
     /* 5. ANIMATIONEN */
