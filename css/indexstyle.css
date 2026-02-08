@@ -246,92 +246,75 @@ body.start-fade .fade-overlay {
     z-index: 10; /* Sicherstellen, dass es oben liegt */
 }
 
-/* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
+
+
+    /* --- FINALE INDEX FIX (V22 - Original Background & Fix) --- */
 @media screen and (max-width: 768px) {
 
-  /* 1. Umschlag Basis */
+    /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        transform-origin: center -10% !important; 
-        
-        /* WICHTIGSTER FIX: Schatten killen! 
-           Das Entfernen dieses Schattens entlastet den Handy-Prozessor massiv. */
+        transform-origin: center top !important; 
+        /* Schatten weg für Performance, Hintergrund ist schon schwer genug */
         box-shadow: none !important;
-
-        /* Hardware-Beschleunigung */
         will-change: transform;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        
-        /* Dein gewünschtes Timing */
-        transition: transform 2.5s ease-in-out 0.8s;
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
-        transform-origin: center -10% !important; 
+        transform-origin: center top !important; 
     }
 
-    /* 3. Der Brief - Startzustand */
+    /* 3. Der Brief - BASISZUSTAND (Im Umschlag) */
     .envelope > .letter {
-        height: 86% !important; 
-        width: 60% !important;
-        
-        right: auto !important; 
+        /* Positionierung sicherstellen */
+        width: 90% !important;
+        height: 85% !important;
         left: 50% !important;
-        bottom: auto !important;
         top: 50% !important;
-        
-        /* Startposition: Exakt mittig */
         transform: translate(-50%, -50%) !important;
         
-        z-index: 1 !important; 
-        opacity: 0;
+        /* HIER IST DER ORIGINALE DESKTOP-HINTERGRUND ZURÜCK */
+        background: #000 !important;
+        background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
+        radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
+        repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
+        transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, 
+        transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
+        rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
+        rgb(240, 240, 240)) !important;
 
-        /* WICHTIG: Verhindert Flackern auf Handys */
-        will-change: transform, opacity;
-        backface-visibility: hidden;
+        /* Schatten entfernen, um CPU zu sparen (Hintergrund ist teuer genug) */
+        box-shadow: none !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+
+        /* Start: Unsichtbar & Hinter den Umschlag-Laschen */
+        opacity: 0; 
+        z-index: 1 !important; 
+        pointer-events: none;
     }
 
-    /* 4. Der Brief - Animation */
+    /* 4. Der Brief - ANIMATION (Fährt heraus) */
     .flap .envelope .letter {
-        /* WIEDER ZURÜCK: Auf -150px gesetzt (statt -90px).
-           Jetzt fährt er wieder weit heraus wie am Anfang. */
-        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
+        /* Fährt weit nach oben (-200px) und wird sichtbar */
+        transform: translate(-50%, -50%) translateY(-200px) scale(0.9) !important;
         
-        z-index: 1 !important; 
+        /* WICHTIG: Z-Index hochsetzen, damit er VOR dem Umschlag erscheint */
+        z-index: 50 !important; 
         opacity: 1 !important;
         
-        will-change: transform, opacity;
-        backface-visibility: hidden;
-        
+        /* Etwas später starten (1.2s), damit der Umschlag erst zoomen kann */
         transition: 
-            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
-            opacity 0.1s ease-out 0.2s; 
+            transform 2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
+            opacity 0.2s ease-out 1.2s;
     }
-    /* Siegel & Hinweis */
-    .heart { width: 120px; height: 120px; }
+
+    /* 5. Sonstiges */
+    .heart {
+        width: 100px; height: 100px;
+        filter: none !important;
+        margin-top: 20px;
+    }
     .click-hint { display: none; }
 }
-/* 5. PERFORMANCE FIX: BRIEF-HINTERGRUND VEREINFACHEN */
-    .envelope > .letter {
-        /* WICHTIG: Das komplexe Muster ausschalten! */
-        background-image: none !important;
-        
-        /* Stattdessen eine schöne, simple Papier-Farbe (helles Creme/Weiß) */
-        background-color: #fdfbf7 !important;
-        
-        /* Optional: Ein ganz simpler Verlauf für etwas Tiefe, der kaum Leistung kostet */
-        background: linear-gradient(to bottom, #fffcf5 0%, #f5ebb8 100%) !important;
-        
-        /* Schatten vereinfachen */
-        box-shadow: 0 0 5px rgba(0,0,0, 0.2) !important;
-    }
-    
-    /* ZUSATZ: Siegel-Animation optimieren */
-    .heart {
-        /* Filter ausschalten, da das Siegel beim Zoomen sonst ruckelt */
-        filter: none !important; 
-        will-change: transform, opacity;
-    }
