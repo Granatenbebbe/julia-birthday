@@ -314,3 +314,24 @@ body.start-fade .fade-overlay {
     .heart { width: 120px; height: 120px; }
     .click-hint { display: none; }
 }
+/* 5. PERFORMANCE FIX: BRIEF-HINTERGRUND VEREINFACHEN */
+    .envelope > .letter {
+        /* WICHTIG: Das komplexe Muster ausschalten! */
+        background-image: none !important;
+        
+        /* Stattdessen eine schöne, simple Papier-Farbe (helles Creme/Weiß) */
+        background-color: #fdfbf7 !important;
+        
+        /* Optional: Ein ganz simpler Verlauf für etwas Tiefe, der kaum Leistung kostet */
+        background: linear-gradient(to bottom, #fffcf5 0%, #f5ebb8 100%) !important;
+        
+        /* Schatten vereinfachen */
+        box-shadow: 0 0 5px rgba(0,0,0, 0.2) !important;
+    }
+    
+    /* ZUSATZ: Siegel-Animation optimieren */
+    .heart {
+        /* Filter ausschalten, da das Siegel beim Zoomen sonst ruckelt */
+        filter: none !important; 
+        will-change: transform, opacity;
+    }
