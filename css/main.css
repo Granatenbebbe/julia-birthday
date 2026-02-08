@@ -1714,17 +1714,48 @@ body {
     /* Oder alternativ, falls du den Schatten behalten willst, aber weicher: */
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
+/* ============================================================ */
+/* --- SICHERE GLOBALE OPTIMIERUNG (V28 - Desktop High Quality) --- */
+/* ============================================================ */
 
-/* --- FINALE MOBILE VERSION (V26 - Back to Smooth) --- */
+/* 1. Hintergrund-Blur global entfernen (Macht Bild schärfer & schneller) */
+.night {
+    filter: none !important;
+}
+
+/* 2. Hardware-Beschleunigung aktivieren (Ruckeln verhindern) */
+/* Wir schalten hier KEINE Schatten oder Farben aus! Nur Turbo an. */
+.flower, .flower__leaf, .flower__line, .flower__leafs, 
+.flower__grass, .growing-grass {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 3. Lichter global aus (Geschmacks- & Performancesache) */
+.flower__light {
+    display: none !important;
+}
+
+/* --- FINALE MOBILE VERSION (V28 - Desktop Schön, Handy Schnell) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND: OPTIMIERT */
+    /* 1. SPARMODUS NUR FÜR HANDY (Hier schalten wir Grafik runter) */
+    .flower__leaf, .flower__line, .flower__line__leaf, 
+    .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
+        /* Schatten entfernen spart 80% Leistung auf dem Handy */
+        box-shadow: none !important;
+        /* Filter entfernen */
+        filter: none !important;
+    }
+
+    /* 2. HINTERGRUND */
     .night {
         position: fixed; top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
         z-index: -1;
-        /* Original Hintergrund */
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1732,17 +1763,15 @@ body {
         transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
-        
-        /* WICHTIG: Blur aus für Performance */
         filter: none !important; 
     }
 
-    /* 2. BASICS */
+    /* 3. BASICS */
     body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 3. TEXT - FLÜSSIGES EINBLENDEN (OHNE ZOOM) */
+    /* 4. TEXT - FLÜSSIGES EINBLENDEN (OHNE ZOOM) */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1751,31 +1780,23 @@ body {
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
         pointer-events: none;
-        will-change: opacity; /* Nur Opacity, das ist schnell */
+        will-change: opacity; 
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
         font-size: 5.5rem; 
         display: inline-block; 
-        
-        /* Gold-Look beibehalten */
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; 
         background-clip: text; 
         -webkit-text-fill-color: transparent;
-        
-        /* Schatten beibehalten */
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
-
         opacity: 0; 
-        
-        /* HIER ZURÜCKGESETZT: Nur einfaches Einblenden */
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* Timing (Spät einblenden) */
     .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
     .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
@@ -1792,14 +1813,13 @@ body {
         left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
-
     .birthday-message span.name-highlight::after {
         content: '\1F33B'; font-size: 4rem; position: absolute;
         right: -80px; top: 50%; transform: translateY(-50%) rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 4. BLUMEN & NATUR */
+    /* 5. BLUMEN & NATUR */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
@@ -1818,12 +1838,11 @@ body {
         will-change: transform;
     }
 
-    /* 5. ANIMATIONEN */
+    /* 6. ANIMATIONEN */
     .flower {
         left: 50% !important; margin: 0 !important; opacity: 1 !important;
         animation-play-state: running !important; display: block !important;
     }
-
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
@@ -1839,27 +1858,3 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 }
-/* --- PERFORMANCE BOOSTER (V20) --- */
-
-    /* 1. Schatten auf bewegten Teilen entfernen */
-    /* Der 3D-Effekt ist auf dem kleinen Handy-Screen eh kaum sichtbar,
-       aber das Entfernen spart massive Rechenleistung. */
-    .flower__leaf, .flower__line, .flower__line__leaf, 
-    .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
-        box-shadow: none !important;
-        filter: none !important;
-    }
-
-    /* 2. Hardware-Beschleunigung aktivieren */
-    /* Sagt dem Handy: "Berechne das hier auf der Grafikkarte (GPU), nicht auf der CPU!" */
-    .flower, .flower__leaf, .flower__line, .flower__leafs {
-        will-change: transform, opacity;
-        backface-visibility: hidden; /* Rückseite nicht berechnen */
-        -webkit-backface-visibility: hidden;
-        perspective: 1000px;
-    }
-
-    /* 3. Lichter aus (hatten wir schon, aber zur Sicherheit) */
-    .flower__light {
-        display: none !important;
-    }
