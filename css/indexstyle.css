@@ -309,7 +309,7 @@ body.start-fade .fade-overlay {
         backface-visibility: hidden;
         
         transition: 
-            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
+            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s, 
             opacity 0.1s ease-out 0.2s; 
     }
     /* Siegel & Hinweis */
