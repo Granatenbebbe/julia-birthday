@@ -1714,7 +1714,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V30 - Gras Überlappung Fix) --- */
+/* --- FINALE MOBILE VERSION (V31 - Gras Links-Shift Fix) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. SPARMODUS (Schatten aus) */
@@ -1724,43 +1724,38 @@ body {
         filter: none !important;
     }
 
-    /* 2. FIX: GRAS ZUSAMMENSCHIEBEN (Aggressiv) */
+    /* 2. FIX: GRAS NACH LINKS SCHIEBEN & ÜBERLAPPEN */
     
     /* Das lange dünne Gras links (flower__g-long) */
     .flower__g-long__top {
-        /* Wir überschreiben die Position komplett.
-           translate(-0.7vmin, 2vmin): 
-           -0.7vmin nach links (Original)
-           2.0vmin nach UNTEN (Viel mehr als vorher, drückt es tief in den Stängel) */
-        transform: translate(-0.7vmin, 2.0vmin) !important;
+        /* HIER IST DIE ÄNDERUNG: */
+        /* translate(-3.5vmin, 2.5vmin): */
+        /* -3.5vmin nach LINKS (vorher war es nur -0.7) -> Das schiebt es rüber */
+        /* 2.5vmin nach UNTEN -> Das drückt es in den Stängel rein */
+        transform: translate(-3.5vmin, 2.5vmin) !important;
         
-        /* Sicherheitshalber die Top-Position korrigieren */
         top: calc(var(--h) * -1 + 1vmin) !important;
     }
     
-    /* Zieht den unteren Teil des langen Grases hoch */
     .flower__g-long__bottom {
         margin-top: -1vmin !important; 
     }
 
-    /* Das buschige Gras (growing-grass / flower__grass) */
-    /* Oberteil */
+    /* Das buschige Gras (flower__grass) */
     .flower__grass--top {
-        /* Drückt es nach unten und leicht nach rechts/links für bessere Passform */
-        transform: rotate(-2deg) translateY(1vmin) !important;
-        z-index: 5 !important; /* Muss über dem Unterteil liegen */
+        /* Auch hier: translate(-1.5vmin, 1vmin) */
+        /* -1.5vmin nach LINKS (damit es mittig sitzt) */
+        /* 1vmin nach UNTEN (gegen Lücken) */
+        transform: rotate(-2deg) translate(-1.5vmin, 1vmin) !important;
+        z-index: 5 !important;
     }
     
-    /* Unterteil */
     .flower__grass--bottom {
-        /* Zieht es massiv nach oben (-1.5vmin sind viel mehr als -2px) */
         margin-top: -1.5vmin !important;
-        
-        /* Kleine Korrektur, falls es seitlich verrutscht war */
         position: relative;
         z-index: 4;
     }
-
+    
     /* 3. HINTERGRUND */
     .night {
         position: fixed; top: 0; left: 0;
