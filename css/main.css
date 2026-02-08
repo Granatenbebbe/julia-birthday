@@ -1714,37 +1714,52 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V29 - Gras repariert & Flüssig) --- */
+/* --- FINALE MOBILE VERSION (V30 - Gras Überlappung Fix) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. SPARMODUS (Schatten aus für Performance) */
+    /* 1. SPARMODUS (Schatten aus) */
     .flower__leaf, .flower__line, .flower__line__leaf, 
     .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
         box-shadow: none !important;
         filter: none !important;
     }
 
-    /* 2. FIX: ZERSTÜCKELTES GRAS REPARIEREN (Sub-Pixel Lücken) */
-    /* Wir schieben die oberen Teile minimal nach unten, damit sie überlappen */
+    /* 2. FIX: GRAS ZUSAMMENSCHIEBEN (Aggressiv) */
     
-    /* Das lange dünne Gras links (Kreis oben im Bild) */
+    /* Das lange dünne Gras links (flower__g-long) */
     .flower__g-long__top {
-        /* War calc(var(--h) * -1). Wir addieren 0.5vmin dazu, um es runterzuziehen */
-        top: calc(var(--h) * -1 + 0.5vmin) !important; 
+        /* Wir überschreiben die Position komplett.
+           translate(-0.7vmin, 2vmin): 
+           -0.7vmin nach links (Original)
+           2.0vmin nach UNTEN (Viel mehr als vorher, drückt es tief in den Stängel) */
+        transform: translate(-0.7vmin, 2.0vmin) !important;
+        
+        /* Sicherheitshalber die Top-Position korrigieren */
+        top: calc(var(--h) * -1 + 1vmin) !important;
+    }
+    
+    /* Zieht den unteren Teil des langen Grases hoch */
+    .flower__g-long__bottom {
+        margin-top: -1vmin !important; 
     }
 
-    /* Die breiteren Blätter unten (Kreis unten im Bild) */
-    .long-g .leaf--0, .long-g .leaf--1, .long-g .leaf--2, .long-g .leaf--3 {
-        /* Wir machen sie einen Tick länger, um Lücken zum Boden zu schließen */
-        height: calc(var(--h) + 1vmin) !important;
-        bottom: -1vmin !important; 
-    }
-
-    /* Verbindungsstücke bei anderen Gräsern */
+    /* Das buschige Gras (growing-grass / flower__grass) */
+    /* Oberteil */
     .flower__grass--top {
-        margin-bottom: -1px !important; /* 1px Überlappung erzwingen */
+        /* Drückt es nach unten und leicht nach rechts/links für bessere Passform */
+        transform: rotate(-2deg) translateY(1vmin) !important;
+        z-index: 5 !important; /* Muss über dem Unterteil liegen */
     }
-
+    
+    /* Unterteil */
+    .flower__grass--bottom {
+        /* Zieht es massiv nach oben (-1.5vmin sind viel mehr als -2px) */
+        margin-top: -1.5vmin !important;
+        
+        /* Kleine Korrektur, falls es seitlich verrutscht war */
+        position: relative;
+        z-index: 4;
+    }
 
     /* 3. HINTERGRUND */
     .night {
