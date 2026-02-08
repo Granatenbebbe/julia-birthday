@@ -1838,27 +1838,3 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 }
-/* --- PERFORMANCE BOOSTER (V20) --- */
-
-    /* 1. Schatten auf bewegten Teilen entfernen */
-    /* Der 3D-Effekt ist auf dem kleinen Handy-Screen eh kaum sichtbar,
-       aber das Entfernen spart massive Rechenleistung. */
-    .flower__leaf, .flower__line, .flower__line__leaf, 
-    .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
-        box-shadow: none !important;
-        filter: none !important;
-    }
-
-    /* 2. Hardware-Beschleunigung aktivieren */
-    /* Sagt dem Handy: "Berechne das hier auf der Grafikkarte (GPU), nicht auf der CPU!" */
-    .flower, .flower__leaf, .flower__line, .flower__leafs {
-        will-change: transform, opacity;
-        backface-visibility: hidden; /* Rückseite nicht berechnen */
-        -webkit-backface-visibility: hidden;
-        perspective: 1000px;
-    }
-
-    /* 3. Lichter aus (hatten wir schon, aber zur Sicherheit) */
-    .flower__light {
-        display: none !important;
-    }
