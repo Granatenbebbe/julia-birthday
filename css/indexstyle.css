@@ -248,14 +248,13 @@ body.start-fade .fade-overlay {
 
 
 
-    /* --- FINALE INDEX FIX (V22 - Original Background & Fix) --- */
+ /* --- FINALE INDEX FIX (V23 - Perfekte Layer & Position) --- */
 @media screen and (max-width: 768px) {
 
     /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
         transform-origin: center top !important; 
-        /* Schatten weg für Performance, Hintergrund ist schon schwer genug */
         box-shadow: none !important;
         will-change: transform;
     }
@@ -268,14 +267,13 @@ body.start-fade .fade-overlay {
 
     /* 3. Der Brief - BASISZUSTAND (Im Umschlag) */
     .envelope > .letter {
-        /* Positionierung sicherstellen */
         width: 90% !important;
         height: 85% !important;
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
         
-        /* HIER IST DER ORIGINALE DESKTOP-HINTERGRUND ZURÜCK */
+        /* Original-Hintergrund (Dunkel mit Muster) */
         background: #000 !important;
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
@@ -285,11 +283,10 @@ body.start-fade .fade-overlay {
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
 
-        /* Schatten entfernen, um CPU zu sparen (Hintergrund ist teuer genug) */
         box-shadow: none !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
 
-        /* Start: Unsichtbar & Hinter den Umschlag-Laschen */
+        /* Unsichtbar starten */
         opacity: 0; 
         z-index: 1 !important; 
         pointer-events: none;
@@ -297,14 +294,16 @@ body.start-fade .fade-overlay {
 
     /* 4. Der Brief - ANIMATION (Fährt heraus) */
     .flap .envelope .letter {
-        /* Fährt weit nach oben (-200px) und wird sichtbar */
-        transform: translate(-50%, -50%) translateY(-200px) scale(0.9) !important;
+        /* HIER KORRIGIERT: Nur -120px statt -200px. Das ist weniger extrem. */
+        transform: translate(-50%, -50%) translateY(-120px) scale(0.9) !important;
         
-        /* WICHTIG: Z-Index hochsetzen, damit er VOR dem Umschlag erscheint */
-        z-index: 50 !important; 
+        /* WICHTIG: Z-Index auf 1 lassen (oder max 2), NICHT 50! 
+           Die untere Lasche hat z-index 2. 
+           Wenn der Brief 1 hat, kommt er schön "aus" dem Umschlag. */
+        z-index: 1 !important; 
+        
         opacity: 1 !important;
         
-        /* Etwas später starten (1.2s), damit der Umschlag erst zoomen kann */
         transition: 
             transform 2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
             opacity 0.2s ease-out 1.2s;
