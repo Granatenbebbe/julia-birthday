@@ -1715,16 +1715,16 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V25 - Desktop Animation & Performance) --- */
+/* --- FINALE MOBILE VERSION (V26 - Back to Smooth) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND: ORIGINAL-LOOK (OHNE BLUR) */
+    /* 1. HINTERGRUND: OPTIMIERT */
     .night {
         position: fixed; top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
         z-index: -1;
-        /* Original Desktop-Hintergrund */
+        /* Original Hintergrund */
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1733,7 +1733,7 @@ body {
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
         
-        /* Performance: Blur aus */
+        /* WICHTIG: Blur aus für Performance */
         filter: none !important; 
     }
 
@@ -1742,7 +1742,7 @@ body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 3. TEXT - DESKTOP ANIMATION ZURÜCK */
+    /* 3. TEXT - FLÜSSIGES EINBLENDEN (OHNE ZOOM) */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1751,7 +1751,7 @@ body {
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
         pointer-events: none;
-        will-change: opacity, transform; 
+        will-change: opacity; /* Nur Opacity, das ist schnell */
     }
     
     .birthday-message span {
@@ -1759,24 +1759,23 @@ body {
         font-size: 5.5rem; 
         display: inline-block; 
         
-        /* Gold-Verlauf */
+        /* Gold-Look beibehalten */
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; 
         background-clip: text; 
         -webkit-text-fill-color: transparent;
         
-        /* Schatten */
+        /* Schatten beibehalten */
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
 
         opacity: 0; 
         
-        /* HIER GEÄNDERT: Wir nutzen 'textFadeIn' (mit Zoom) statt 'simpleFadeIn' */
-        /* Und 'ease-in-out' für den weichen Start/Stopp wie am Desktop */
-        animation: textFadeIn 2s ease-in-out forwards !important; 
+        /* HIER ZURÜCKGESETZT: Nur einfaches Einblenden */
+        animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* Timing wie beim Desktop */
+    /* Timing (Spät einblenden) */
     .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
     .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
@@ -1837,4 +1836,6 @@ body {
     .flower__grass, .flower__g-long, .flower__g-right, .flower__g-front {
         animation-play-state: running !important;
     }
+    
+    @keyframes simpleFadeIn { to { opacity: 1; } }
 }
