@@ -1714,49 +1714,56 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V31 - Gras Links-Shift Fix) --- */
+/* --- FINALE MOBILE VERSION (V32 - Präzisions-Fix & Solide Blätter) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. SPARMODUS (Schatten aus) */
+    /* 1. SPARMODUS (Schatten & Filter aus) */
     .flower__leaf, .flower__line, .flower__line__leaf, 
     .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
         box-shadow: none !important;
         filter: none !important;
     }
 
-    /* 2. FIX: GRAS NACH LINKS SCHIEBEN & ÜBERLAPPEN */
-    
-    /* Das lange dünne Gras links (flower__g-long) */
+    /* 2. FIX: DER DÜNNE HALM LINKS (Präzise Mitte) */
     .flower__g-long__top {
-        /* HIER IST DIE ÄNDERUNG: */
-        /* translate(-3.5vmin, 2.5vmin): */
-        /* -3.5vmin nach LINKS (vorher war es nur -0.7) -> Das schiebt es rüber */
-        /* 2.5vmin nach UNTEN -> Das drückt es in den Stängel rein */
-        transform: translate(-3.5vmin, 2.5vmin) !important;
-        
+        /* Wir korrigieren von -3.5 auf -2.2vmin (Mitte). 
+           Und drücken ihn 2.5vmin nach unten in den Stängel. */
+        transform: translate(-2.2vmin, 2.5vmin) !important;
         top: calc(var(--h) * -1 + 1vmin) !important;
     }
-    
     .flower__g-long__bottom {
         margin-top: -1vmin !important; 
     }
 
-    /* Das buschige Gras (flower__grass) */
+    /* 3. FIX: DIE BUSCHIGEN GRÄSER (Lücken schließen) */
     .flower__grass--top {
-        /* Auch hier: translate(-1.5vmin, 1vmin) */
-        /* -1.5vmin nach LINKS (damit es mittig sitzt) */
-        /* 1vmin nach UNTEN (gegen Lücken) */
-        transform: rotate(-2deg) translate(-1.5vmin, 1vmin) !important;
+        /* Wir drücken den Kopf VIEL tiefer (2.5vmin statt 1vmin) */
+        /* Horizontal lassen wir ihn leicht links (-1.5vmin) */
+        transform: rotate(-2deg) translate(-1.5vmin, 2.5vmin) !important;
         z-index: 5 !important;
     }
     
     .flower__grass--bottom {
-        margin-top: -1.5vmin !important;
+        /* Wir ziehen den Unterteil weiter hoch */
+        margin-top: -2.5vmin !important;
         position: relative;
         z-index: 4;
     }
-    
-    /* 3. HINTERGRUND */
+
+    /* 4. FIX: ZERSTÜCKELTE BREITE BLÄTTER (Solid Color Fix) */
+    /* Die Farbverläufe verursachen Risse auf dem Handy. Wir machen sie vollflächig grün. */
+    .long-g .leaf, .flower__g-right .leaf, .flower__g-fr .leaf {
+        background-image: none !important;
+        background-color: #1aaa15 !important; /* Sattes Blattgrün */
+        mask-image: none !important; /* Masken entfernen, die Schnitte verursachen */
+        -webkit-mask-image: none !important;
+        border: none !important; /* Ränder entfernen, die Lücken bilden */
+        
+        /* Optional: Ein simpler Verlauf, der sicher ist */
+        background: linear-gradient(to top, #0a4d0a, #1aaa15) !important;
+    }
+
+    /* 5. HINTERGRUND */
     .night {
         position: fixed; top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
@@ -1772,12 +1779,12 @@ body {
         filter: none !important; 
     }
 
-    /* 4. BASICS */
+    /* 6. BASICS */
     body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 5. TEXT */
+    /* 7. TEXT */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1825,7 +1832,7 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 6. BLUMEN & NATUR */
+    /* 8. BLUMEN & NATUR */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
@@ -1844,7 +1851,7 @@ body {
         will-change: transform;
     }
 
-    /* 7. ANIMATIONEN */
+    /* 9. ANIMATIONEN */
     .flower {
         left: 50% !important; margin: 0 !important; opacity: 1 !important;
         animation-play-state: running !important; display: block !important;
