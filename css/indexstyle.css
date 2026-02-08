@@ -249,7 +249,7 @@ body.start-fade .fade-overlay {
 
 
 /* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
 
   /* 1. Umschlag Basis */
     .container > .envelope-wrapper {

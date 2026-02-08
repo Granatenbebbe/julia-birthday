@@ -1714,7 +1714,53 @@ body {
     /* Oder alternativ, falls du den Schatten behalten willst, aber weicher: */
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
+/* ============================================================ */
+/* --- GLOBALE PERFORMANCE-OPTIMIERUNG (Für Desktop & Handy) --- */
+/* ============================================================ */
 
+/* 1. Schatten & Filter auf ALLEN bewegten Teilen entfernen */
+/* Das ist der größte Performance-Gewinn. Entfernt die inneren 3D-Schatten. */
+.flower__leaf, .flower__line, .flower__line__leaf, 
+.flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
+    box-shadow: none !important;
+    filter: none !important;
+    background-image: none !important; /* Entfernt komplexe Verläufe auf Blättern */
+    /* Wir geben ihnen stattdessen eine solide Farbe/einfachen Verlauf zurück, 
+       falls sie durch background-image: none transparent wurden: */
+    background-color: #1aaa15; 
+}
+
+/* Spezifische Farben für die Blütenblätter erhalten (damit sie nicht grün werden) */
+.flower__leaf {
+    background-image: linear-gradient(to top, #fce700, #fce700) !important; /* Standard Gelb */
+}
+/* Die bunten Farben müssen wir explizit schützen, da 'background-image: none' sie sonst löscht */
+.flower--2 .flower__leaf { background-image: linear-gradient(to top, #ff6bcb, #ff6bcb) !important; }
+.flower--3 .flower__leaf { background-image: linear-gradient(to top, #a55eea, #a55eea) !important; }
+.flower--4 .flower__leaf { background-image: linear-gradient(to top, #ff5252, #ff5252) !important; }
+.flower--5 .flower__leaf { background-image: linear-gradient(to top, #ff9f43, #ff9f43) !important; }
+.flower--6 .flower__leaf { background-image: linear-gradient(to top, #54a0ff, #54a0ff) !important; }
+.flower--7 .flower__leaf { background-image: linear-gradient(to top, #f5f6fa, #f5f6fa) !important; }
+
+
+/* 2. Hardware-Beschleunigung für alles aktivieren */
+.flower, .flower__leaf, .flower__line, .flower__leafs, 
+.flower__grass, .growing-grass {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 3. Die "Glühwürmchen" (Lichter) global ausschalten */
+.flower__light {
+    display: none !important;
+}
+
+/* 4. Den Hintergrund-Blur global ausschalten (falls noch nicht geschehen) */
+.night {
+    filter: none !important;
+}
 /* --- FINALE MOBILE VERSION (V19 - Original Look & Performance) --- */
 @media screen and (max-width: 1024px) {
 
