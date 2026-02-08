@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V19 - Original Look & Performance) --- */
+/* --- FINALE MOBILE VERSION (V25 - Desktop Animation & Performance) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND: ORIGINAL-LOOK (OHNE BLUR) */
@@ -1724,8 +1724,7 @@ body {
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
         z-index: -1;
-        
-        /* WICHTIG: Das ist der ORIGINAL-Hintergrund vom Desktop */
+        /* Original Desktop-Hintergrund */
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1734,7 +1733,7 @@ body {
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
         
-        /* PERFORMANCE-FIX: Wir schalten nur den Weichzeichner aus! */
+        /* Performance: Blur aus */
         filter: none !important; 
     }
 
@@ -1743,7 +1742,7 @@ body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 3. TEXT - WIEDER HOCHWERTIG (GOLD VERLAUF) */
+    /* 3. TEXT - DESKTOP ANIMATION ZURÜCK */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1752,7 +1751,7 @@ body {
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
         pointer-events: none;
-        will-change: opacity; /* Hilft dem Handy */
+        will-change: opacity, transform; 
     }
     
     .birthday-message span {
@@ -1760,19 +1759,21 @@ body {
         font-size: 5.5rem; 
         display: inline-block; 
         
-        /* Der schöne Gold-Verlauf ist zurück */
+        /* Gold-Verlauf */
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; 
         background-clip: text; 
         -webkit-text-fill-color: transparent;
         
-        /* Schatten wieder an */
+        /* Schatten */
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
 
         opacity: 0; 
-        /* Originales Timing (langsam einblenden) */
-        animation: simpleFadeIn 2s ease-out forwards !important; 
+        
+        /* HIER GEÄNDERT: Wir nutzen 'textFadeIn' (mit Zoom) statt 'simpleFadeIn' */
+        /* Und 'ease-in-out' für den weichen Start/Stopp wie am Desktop */
+        animation: textFadeIn 2s ease-in-out forwards !important; 
     }
 
     /* Timing wie beim Desktop */
@@ -1790,7 +1791,6 @@ body {
     .birthday-message span.name-highlight::before {
         content: '\1F33B'; font-size: 4rem; position: absolute;
         left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
-        /* Filter hier aus lassen für Performance, fällt kaum auf */
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
@@ -1800,7 +1800,7 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
 
-    /* 4. BLUMEN & NATUR (Bleibt alles an) */
+    /* 4. BLUMEN & NATUR */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
@@ -1837,30 +1837,4 @@ body {
     .flower__grass, .flower__g-long, .flower__g-right, .flower__g-front {
         animation-play-state: running !important;
     }
-
-    @keyframes simpleFadeIn { to { opacity: 1; } }
 }
-/* --- PERFORMANCE BOOSTER (V20) --- */
-
-    /* 1. Schatten auf bewegten Teilen entfernen */
-    /* Der 3D-Effekt ist auf dem kleinen Handy-Screen eh kaum sichtbar,
-       aber das Entfernen spart massive Rechenleistung. */
-    .flower__leaf, .flower__line, .flower__line__leaf, 
-    .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
-        box-shadow: none !important;
-        filter: none !important;
-    }
-
-    /* 2. Hardware-Beschleunigung aktivieren */
-    /* Sagt dem Handy: "Berechne das hier auf der Grafikkarte (GPU), nicht auf der CPU!" */
-    .flower, .flower__leaf, .flower__line, .flower__leafs {
-        will-change: transform, opacity;
-        backface-visibility: hidden; /* Rückseite nicht berechnen */
-        -webkit-backface-visibility: hidden;
-        perspective: 1000px;
-    }
-
-    /* 3. Lichter aus (hatten wir schon, aber zur Sicherheit) */
-    .flower__light {
-        display: none !important;
-    }
