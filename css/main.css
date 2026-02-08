@@ -1715,7 +1715,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V16 - Perfektes Timing) --- */
+/* --- FINALE MOBILE VERSION (V17 - Performance Fix) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1737,7 +1737,7 @@ body {
         filter: none !important; z-index: -1;
     }
 
-    /* 2. TEXT - RIESIG & SPÄTER */
+    /* 2. TEXT - OPTIMIERT */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1745,40 +1745,44 @@ body {
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
+        /* Verhindert Klick-Events auf dem Text-Container */
+        pointer-events: none; 
     }
     
-    /* Basis-Stil für alle Textteile */
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
         font-size: 5.5rem; 
         display: inline-block; 
-        color: #ffbf00;
-        background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
-        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
-        opacity: 0; /* Startet unsichtbar */
         
-        /* HIER IST DER FIX: Keine feste Verzögerung mehr im Shorthand! */
+        /* --- PERFORMANCE FIX START --- */
+        /* Wir setzen alle teuren Effekte zurück */
+        background: none !important;
+        -webkit-text-fill-color: initial !important;
+        background-clip: border-box !important;
+        filter: none !important;
+
+        /* Neuer, schneller Style: Solides Gold mit klassischem Schatten */
+        color: #ffbf00 !important; 
+        /* Ein harter schwarzer Schatten für Lesbarkeit + ein weicher goldener Glow */
+        text-shadow: 3px 3px 0 #000, 0 0 15px rgba(255, 191, 0, 0.4) !important;
+        
+        /* Hilft dem Handy-Browser beim Rendern */
+        will-change: opacity;
+        /* --- PERFORMANCE FIX END --- */
+
+        opacity: 0; 
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* HIER DAS TIMING WIEDERHERSTELLEN (Wie Desktop) */
-    /* "Happy" */
-    .birthday-message span:nth-child(1) {
-        animation-delay: 6s !important;
-    }
-    /* "Birthday" */
-    .birthday-message span:nth-child(2) {
-        animation-delay: 6.5s !important;
-    }
+    /* TIMING (Wie Desktop) */
+    .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
+    .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
-    /* "Julia" & Sonnenblumen */
     .birthday-message span.name-highlight {
         font-size: 8.5rem; 
         display: inline-block !important; 
         margin-top: 15px; 
         position: relative;
-        /* Spätestes Erscheinen */
         animation-delay: 7s !important; 
     }
     
@@ -1786,15 +1790,17 @@ body {
         content: '\1F33B'; font-size: 4rem; position: absolute;
         left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
+        text-shadow: none !important; /* Kein Schatten für Emojis */
     }
 
     .birthday-message span.name-highlight::after {
         content: '\1F33B'; font-size: 4rem; position: absolute;
         right: -80px; top: 50%; transform: translateY(-50%) rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
+        text-shadow: none !important;
     }
 
-    /* 3. GRAS & BLÄTTER AN */
+    /* 3. REST (GRAS & BLÄTTER AN) */
     .flower__light { display: none !important; }
 
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
@@ -1813,6 +1819,9 @@ body {
         transform-origin: bottom center !important;
         z-index: 10 !important;
         pointer-events: none;
+        
+        /* Performance: Wir sagen dem Browser, dass sich hier was bewegt */
+        will-change: transform;
     }
 
     /* 5. ANIMATIONEN STARTEN */
