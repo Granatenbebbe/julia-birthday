@@ -266,7 +266,7 @@ body.start-fade .fade-overlay {
         -webkit-backface-visibility: hidden;
         
         /* Dein gewünschtes Timing */
-        transition: transform 2.5s ease-in-out 0.8s;
+        transition: transform 3s ease-in-out 1.5s !important;
     }
 
     /* 2. Zoom beim Öffnen */
@@ -309,8 +309,8 @@ body.start-fade .fade-overlay {
         backface-visibility: hidden;
         
         transition: 
-            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
-            opacity 0.1s ease-out 0.2s; 
+            transform 2s cubic-bezier(0.4, 0, 0.2, 1) 2.0s, 
+            opacity 0.2s ease-out 2.0s; 
     }
     /* Siegel & Hinweis */
     .heart { width: 120px; height: 120px; }
