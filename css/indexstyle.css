@@ -248,72 +248,71 @@ body.start-fade .fade-overlay {
 
 
 
- /* --- FINALE INDEX FIX (V23 - Perfekte Layer & Position) --- */
+/* --- FINALE MOBILE OPTIMIERUNG V13 (Smooth & Anti-Buggy) --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Umschlag Basis */
+  /* 1. Umschlag Basis */
     .container > .envelope-wrapper {
         transform: scale(0.7);
-        transform-origin: center top !important; 
+        transform-origin: center -10% !important; 
+        
+        /* WICHTIGSTER FIX: Schatten killen! 
+           Das Entfernen dieses Schattens entlastet den Handy-Prozessor massiv. */
         box-shadow: none !important;
+
+        /* Hardware-Beschleunigung */
         will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        
+        /* Dein gewünschtes Timing */
+        transition: transform 2.5s ease-in-out 0.8s;
     }
 
     /* 2. Zoom beim Öffnen */
     .container > .envelope-wrapper.flap {
         transform: scale(6) !important; 
-        transform-origin: center top !important; 
+        transform-origin: center -10% !important; 
     }
 
-    /* 3. Der Brief - BASISZUSTAND (Im Umschlag) */
+    /* 3. Der Brief - Startzustand */
     .envelope > .letter {
-        width: 90% !important;
-        height: 85% !important;
+        height: 86% !important; 
+        width: 60% !important;
+        
+        right: auto !important; 
         left: 50% !important;
+        bottom: auto !important;
         top: 50% !important;
+        
+        /* Startposition: Exakt mittig */
         transform: translate(-50%, -50%) !important;
         
-        /* Original-Hintergrund (Dunkel mit Muster) */
-        background: #000 !important;
-        background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
-        radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
-        repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
-        transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, 
-        transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
-        rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
-        rgb(240, 240, 240)) !important;
-
-        box-shadow: none !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-
-        /* Unsichtbar starten */
-        opacity: 0; 
         z-index: 1 !important; 
-        pointer-events: none;
+        opacity: 0;
+
+        /* WICHTIG: Verhindert Flackern auf Handys */
+        will-change: transform, opacity;
+        backface-visibility: hidden;
     }
 
-    /* 4. Der Brief - ANIMATION (Fährt heraus) */
+    /* 4. Der Brief - Animation */
     .flap .envelope .letter {
-        /* HIER KORRIGIERT: Nur -120px statt -200px. Das ist weniger extrem. */
-        transform: translate(-50%, -50%) translateY(-120px) scale(0.9) !important;
+        /* WIEDER ZURÜCK: Auf -150px gesetzt (statt -90px).
+           Jetzt fährt er wieder weit heraus wie am Anfang. */
+        transform: translate(-50%, -50%) translateY(-150px) scale(0.9) !important;
         
-        /* WICHTIG: Z-Index auf 1 lassen (oder max 2), NICHT 50! 
-           Die untere Lasche hat z-index 2. 
-           Wenn der Brief 1 hat, kommt er schön "aus" dem Umschlag. */
         z-index: 1 !important; 
-        
         opacity: 1 !important;
         
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        
         transition: 
-            transform 2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
-            opacity 0.2s ease-out 1.2s;
+            transform 2.0s cubic-bezier(0.4, 0, 0.2, 1) 1.2s, 
+            opacity 0.1s ease-out 0.2s; 
     }
-
-    /* 5. Sonstiges */
-    .heart {
-        width: 100px; height: 100px;
-        filter: none !important;
-        margin-top: 20px;
-    }
+    /* Siegel & Hinweis */
+    .heart { width: 120px; height: 120px; }
     .click-hint { display: none; }
 }
