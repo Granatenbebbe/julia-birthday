@@ -1714,7 +1714,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V29 - Original Timing) --- */
+/* --- FINALE MOBILE VERSION (V30 - Animation Fixed) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1734,7 +1734,7 @@ body {
     }
     body { overflow: hidden; width: 100vw; height: 100vh; position: fixed; }
 
-    /* --- 2. TEXT: ORIGINAL DESKTOP TIMING --- */
+    /* --- 2. TEXT: KORREKTES TIMING WIEDERHERGESTELLT --- */
     .birthday-message {
         position: fixed !important; 
         top: 15% !important;
@@ -1753,18 +1753,21 @@ body {
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
         
-        opacity: 0; 
-        /* ZURÜCK AUF 2s (wie Desktop) */
+        /* Startzustand unsichtbar erzwingen */
+        opacity: 0 !important; 
+        
+        /* Animation definieren */
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* WICHTIG: Wir haben die extra "animation-delay" Regeln hier GELÖSCHT. 
-       Dadurch greifen jetzt wieder die Original-Zeiten aus der HTML-Datei:
-       6s, 6.5s und 7s. */
+    /* HIER SIND DIE FEHLENDEN VERZÖGERUNGEN (WICHTIG!) */
+    .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
+    .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
     .birthday-message span.name-highlight {
         font-size: 8rem; display: inline-block !important; margin-top: 20px; position: relative;
-        /* Kein extra Delay mehr hier -> nutzt die 7s vom HTML */
+        /* Auch hier die Verzögerung erzwingen */
+        animation-delay: 7s !important;
     }
     
     .birthday-message span.name-highlight::before {
@@ -1777,7 +1780,12 @@ body {
         right: -70px; top: 50%; transform: translateY(-50%) rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
-    @keyframes simpleFadeIn { to { opacity: 1; } }
+    
+    /* Keyframe für das Einblenden */
+    @keyframes simpleFadeIn { 
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
 
     /* 3. BLUMEN & NATUR */
     .flowers {
@@ -1803,6 +1811,13 @@ body {
     .flower--7 { animation-delay: 2.6s !important; }
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf { animation-play-state: running !important; }
 
+    /* --- 5. GRAS FIX V4 (Sanft & Sauber) --- */
+    .long-g .leaf, .flower__g-right .leaf, .flower__g-fr .leaf {
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 25%) !important;
+        mask-image: linear-gradient(to top, transparent 0%, #000 25%) !important;
+    }
+    .flower__grass--top { transform-origin: bottom right !important; }
+    .flower__grass--bottom { margin-top: -10px !important; position: relative; z-index: 101; }
 
     /* --- 6. PERFORMANCE BOOSTER --- */
     .flower__leaf, .flower__line, .flower__line__leaf, 
