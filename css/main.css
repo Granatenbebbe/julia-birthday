@@ -1827,17 +1827,28 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 
-/* --- FIX: ZERSTÜCKELTES GRAS REPARIEREN --- */
-    /* Wir setzen den Drehpunkt auf "unten rechts", damit die Kante bündig bleibt */
-    .flower__grass--top {
-        transform-origin: bottom right !important;
+/* --- FIX: ZERSTÜCKELTES GRAS (Reparatur-Kit) --- */
+
+    /* 1. Die "Geister-Blätter" unten reparieren */
+    /* Wir schalten die Transparenz-Maske aus, damit das Blatt voll sichtbar ist */
+    .long-g .leaf, 
+    .flower__g-right .leaf,
+    .flower__g-fr .leaf {
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
     }
 
-    /* Optional: Falls noch eine winzige Lücke bleibt, schieben wir sie 1px zusammen */
-    .flower__grass--bottom {
-        margin-top: -2px !important; /* Das ist der Standard, wir stellen sicher dass er bleibt */
+    /* 2. Den "gebrochenen" Halm links oben reparieren */
+    /* Wir entfernen die Rotation, damit Ober- und Unterteil perfekt gerade aufeinander sitzen */
+    .flower__grass--top {
+        transform: rotate(0deg) !important; 
     }
     
+    /* Wir ziehen den Stängel etwas höher, damit sie sich sicher überlappen */
+    .flower__grass--bottom {
+        margin-top: -5px !important; 
+    }
+
     /* --- PERFORMANCE BOOSTER (JETZT KORREKT VERSCHACHTELT) --- */
 
     /* 1. Schatten entfernen */
