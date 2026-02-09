@@ -1716,10 +1716,10 @@ body {
 
 /* ... (Der ganze obere Teil bleibt gleich, ich füge hier nur das korrekte Ende ein) ... */
 
-/* --- FINALE MOBILE VERSION (V26 - Back to Smooth) --- */
+/* --- FINALE MOBILE VERSION (V28 - Slow Text & Clean Grass) --- */
 @media screen and (max-width: 1024px) {
 
-    /* 1. HINTERGRUND: OPTIMIERT */
+    /* 1. HINTERGRUND & BASICS */
     .night {
         position: fixed; top: 0; left: 0;
         width: 100vw !important; height: 100vh !important;
@@ -1734,84 +1734,68 @@ body {
         rgb(240, 240, 240)) !important;
         filter: none !important; 
     }
+    body { overflow: hidden; width: 100vw; height: 100vh; position: fixed; }
 
-    /* 2. BASICS */
-    body {
-        overflow: hidden; width: 100vw; height: 100vh; position: fixed;
-    }
-
-    /* 3. TEXT - FLÜSSIGES EINBLENDEN */
+    /* --- 2. TEXT: LANGSAMER & GEORDNETER --- */
     .birthday-message {
         position: fixed !important; 
-        top: 12% !important; 
+        top: 15% !important; /* Etwas tiefer, wirkt entspannter */
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
-        white-space: nowrap; 
-        pointer-events: none;
-        will-change: opacity;
+        white-space: nowrap; pointer-events: none; will-change: opacity;
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        font-size: 5.5rem; 
+        font-size: 5rem; /* Leicht kleiner für mehr Eleganz */
         display: inline-block; 
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
-        -webkit-background-clip: text; 
-        background-clip: text; 
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
+        
         opacity: 0; 
-        animation: simpleFadeIn 2s ease-out forwards !important; 
+        /* HIER IST DIE ÄNDERUNG: 4s statt 2s für sehr weiches Einblenden */
+        animation: simpleFadeIn 4s ease-out forwards !important; 
     }
 
-    .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
-    .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
+    /* Die neuen Zeiten: Viel mehr Abstand zwischen den Wörtern */
+    .birthday-message span:nth-child(1) { animation-delay: 5s !important; }  /* "Happy" startet früher */
+    .birthday-message span:nth-child(2) { animation-delay: 8s !important; }  /* 3 Sek. Pause -> "Birthday" */
     
     .birthday-message span.name-highlight {
-        font-size: 8.5rem; 
-        display: inline-block !important; 
-        margin-top: 15px; 
-        position: relative;
-        animation-delay: 7s !important; 
+        font-size: 8rem; display: inline-block !important; margin-top: 20px; position: relative;
+        animation-delay: 11s !important; /* Weitere 3 Sek. Pause -> "Julia" */
     }
     
     .birthday-message span.name-highlight::before {
-        content: '\1F33B'; font-size: 4rem; position: absolute;
-        left: -80px; top: 50%; transform: translateY(-50%) rotate(-20deg);
+        content: '\1F33B'; font-size: 3.5rem; position: absolute;
+        left: -70px; top: 50%; transform: translateY(-50%) rotate(-20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
-
     .birthday-message span.name-highlight::after {
-        content: '\1F33B'; font-size: 4rem; position: absolute;
-        right: -80px; top: 50%; transform: translateY(-50%) rotate(20deg);
+        content: '\1F33B'; font-size: 3.5rem; position: absolute;
+        right: -70px; top: 50%; transform: translateY(-50%) rotate(20deg);
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
+    @keyframes simpleFadeIn { to { opacity: 1; } }
 
-    /* 4. BLUMEN & NATUR */
-    .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
-    .flower__g-fr, .long-g, .flower__grass {
-        display: block !important; opacity: 1 !important; visibility: visible !important;
-    }
-
+    /* 3. BLUMEN & NATUR (Sichtbarkeit erzwingen) */
     .flowers {
-        position: fixed !important;
-        bottom: 2vh !important; left: 50% !important;
+        position: fixed !important; bottom: 2vh !important; left: 50% !important;
         width: 0 !important; height: 0 !important;
-        transform: scale(1.7) !important; 
+        transform: scale(1.6) !important; /* Leicht reduziert, damit Gras besser passt */
         transform-origin: bottom center !important;
-        z-index: 10 !important;
-        pointer-events: none;
-        will-change: transform;
+        z-index: 10 !important; pointer-events: none; will-change: transform;
+    }
+    .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
+    .flower__g-fr, .long-g, .flower__grass, .flower {
+        display: block !important; opacity: 1 !important; visibility: visible !important;
+        animation-play-state: running !important;
     }
 
-    /* 5. ANIMATIONEN */
-    .flower {
-        left: 50% !important; margin: 0 !important; opacity: 1 !important;
-        animation-play-state: running !important; display: block !important;
-    }
-
+    /* 4. ANIMATIONEN STARTEN */
     .flower--1 { animation-delay: 0.2s !important; }
     .flower--2 { animation-delay: 0.6s !important; }
     .flower--3 { animation-delay: 1.0s !important; }
@@ -1819,58 +1803,18 @@ body {
     .flower--5 { animation-delay: 1.8s !important; }
     .flower--6 { animation-delay: 2.2s !important; }
     .flower--7 { animation-delay: 2.6s !important; }
+    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf { animation-play-state: running !important; }
 
-    .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf,
-    .flower__grass, .flower__g-long, .flower__g-right, .flower__g-front {
-        animation-play-state: running !important;
-    }
-    
-    @keyframes simpleFadeIn { to { opacity: 1; } }
 
-/* --- FIX V4: PRÄZISIONS-REPARATUR --- */
-
-    /* 1. Die "halben" Blätter reparieren (Maske anpassen statt löschen) */
-    /* Wir starten den Verlauf bei 0% statt 20%, damit das Blatt unten nicht verschwindet */
-    .long-g .leaf, 
-    .flower__g-right .leaf,
-    .flower__g-fr .leaf {
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 20%) !important;
-        mask-image: linear-gradient(to top, transparent 0%, #000 20%) !important;
-    }
-
-    /* 2. Den "gebrochenen" Halm links oben verbinden */
-    /* A: Drehpunkt korrigieren -> auf "unten rechts" setzen, da dort der Stängel ist */
-    .flower__grass--top {
-        transform-origin: bottom right !important;
-    }
-    
-    /* B: Überlappung erzwingen -> Stängel weit nach oben ziehen */
-    .flower__grass--bottom {
-        margin-top: -10px !important; 
-        position: relative;
-        z-index: 101; /* Sicherstellen, dass die Verbindung sichtbar ist */
-    }
-
-    /* --- PERFORMANCE BOOSTER (JETZT KORREKT VERSCHACHTELT) --- */
-
-    /* 1. Schatten entfernen */
+    /* --- 6. PERFORMANCE BOOSTER --- */
     .flower__leaf, .flower__line, .flower__line__leaf, 
     .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
-        box-shadow: none !important;
-        filter: none !important;
+        box-shadow: none !important; filter: none !important;
     }
-
-    /* 2. Hardware-Beschleunigung */
     .flower, .flower__leaf, .flower__line, .flower__leafs {
         will-change: transform, opacity;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        perspective: 1000px;
+        backface-visibility: hidden; -webkit-backface-visibility: hidden; perspective: 1000px;
     }
+    .flower__light { display: none !important; }
 
-    /* 3. Lichter aus */
-    .flower__light {
-        display: none !important;
-    }
-
-} /* ENDE DER MEDIA QUERY */
+} /* <--- ENDE DER DATEI */
