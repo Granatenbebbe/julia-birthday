@@ -1714,6 +1714,8 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
+/* ... (Der ganze obere Teil bleibt gleich, ich füge hier nur das korrekte Ende ein) ... */
+
 /* --- FINALE MOBILE VERSION (V26 - Back to Smooth) --- */
 @media screen and (max-width: 1024px) {
 
@@ -1723,7 +1725,6 @@ body {
         width: 100vw !important; height: 100vh !important;
         transform: none !important;
         z-index: -1;
-        /* Original Hintergrund */
         background-image: radial-gradient(ellipse at top, transparent 0%, #000), 
         radial-gradient(ellipse at bottom, #000, rgba(145, 233, 255, 0.2)), 
         repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, 
@@ -1731,8 +1732,6 @@ body {
         transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
         rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
         rgb(240, 240, 240)) !important;
-        
-        /* WICHTIG: Blur aus für Performance */
         filter: none !important; 
     }
 
@@ -1741,7 +1740,7 @@ body {
         overflow: hidden; width: 100vw; height: 100vh; position: fixed;
     }
 
-    /* 3. TEXT - FLÜSSIGES EINBLENDEN (OHNE ZOOM) */
+    /* 3. TEXT - FLÜSSIGES EINBLENDEN */
     .birthday-message {
         position: fixed !important; 
         top: 12% !important; 
@@ -1750,31 +1749,23 @@ body {
         width: 100% !important; text-align: center !important; z-index: 99999;
         white-space: nowrap; 
         pointer-events: none;
-        will-change: opacity; /* Nur Opacity, das ist schnell */
+        will-change: opacity;
     }
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
         font-size: 5.5rem; 
         display: inline-block; 
-        
-        /* Gold-Look beibehalten */
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
         -webkit-background-clip: text; 
         background-clip: text; 
         -webkit-text-fill-color: transparent;
-        
-        /* Schatten beibehalten */
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
-
         opacity: 0; 
-        
-        /* HIER ZURÜCKGESETZT: Nur einfaches Einblenden */
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* Timing (Spät einblenden) */
     .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
     .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
@@ -1799,8 +1790,6 @@ body {
     }
 
     /* 4. BLUMEN & NATUR */
-    .flower__light { display: none !important; }
-
     .growing-grass, .flower__g-long, .flower__g-right, .flower__g-front, 
     .flower__g-fr, .long-g, .flower__grass {
         display: block !important; opacity: 1 !important; visibility: visible !important;
@@ -1838,29 +1827,26 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 
-/* --- PERFORMANCE BOOSTER (V20) --- */
+    /* --- PERFORMANCE BOOSTER (JETZT KORREKT VERSCHACHTELT) --- */
 
-    /* 1. Schatten auf bewegten Teilen entfernen */
-    /* Der 3D-Effekt ist auf dem kleinen Handy-Screen eh kaum sichtbar,
-       aber das Entfernen spart massive Rechenleistung. */
+    /* 1. Schatten entfernen */
     .flower__leaf, .flower__line, .flower__line__leaf, 
     .flower__g-front__leaf, .flower__g-fr__leaf, .long-g .leaf {
         box-shadow: none !important;
         filter: none !important;
     }
 
-    /* 2. Hardware-Beschleunigung aktivieren */
-    /* Sagt dem Handy: "Berechne das hier auf der Grafikkarte (GPU), nicht auf der CPU!" */
+    /* 2. Hardware-Beschleunigung */
     .flower, .flower__leaf, .flower__line, .flower__leafs {
         will-change: transform, opacity;
-        backface-visibility: hidden; /* Rückseite nicht berechnen */
+        backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         perspective: 1000px;
     }
 
-    /* 3. Lichter aus (hatten wir schon, aber zur Sicherheit) */
+    /* 3. Lichter aus */
     .flower__light {
         display: none !important;
     }
-    /* 4. Animationen optimieren */
-  }
+
+} /* ENDE DER MEDIA QUERY */
