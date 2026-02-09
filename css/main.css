@@ -1837,7 +1837,7 @@ body {
     }
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
-}
+
 /* --- PERFORMANCE BOOSTER (V20) --- */
 
     /* 1. Schatten auf bewegten Teilen entfernen */
@@ -1863,4 +1863,4 @@ body {
         display: none !important;
     }
     /* 4. Animationen optimieren */
-    
+  }
