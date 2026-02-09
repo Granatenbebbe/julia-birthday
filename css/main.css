@@ -1781,11 +1781,7 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
     
-    /* Keyframe für das Einblenden */
-    @keyframes simpleFadeIn { 
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-    }
+
 
     /* 3. BLUMEN & NATUR */
     .flowers {
@@ -1811,13 +1807,7 @@ body {
     .flower--7 { animation-delay: 2.6s !important; }
     .flower__line, .flower__leafs, .flower__leaf, .flower__line__leaf { animation-play-state: running !important; }
 
-    /* --- 5. GRAS FIX V4 (Sanft & Sauber) --- */
-    .long-g .leaf, .flower__g-right .leaf, .flower__g-fr .leaf {
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 25%) !important;
-        mask-image: linear-gradient(to top, transparent 0%, #000 25%) !important;
-    }
-    .flower__grass--top { transform-origin: bottom right !important; }
-    .flower__grass--bottom { margin-top: -10px !important; position: relative; z-index: 101; }
+
 
     /* --- 6. PERFORMANCE BOOSTER --- */
     .flower__leaf, .flower__line, .flower__line__leaf, 
