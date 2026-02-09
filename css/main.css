@@ -1714,9 +1714,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* ... (Der ganze obere Teil bleibt gleich, ich füge hier nur das korrekte Ende ein) ... */
-
-/* --- FINALE MOBILE VERSION (V28 - Slow Text & Clean Grass) --- */
+/* --- FINALE MOBILE VERSION (V29 - Original Timing) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1736,10 +1734,10 @@ body {
     }
     body { overflow: hidden; width: 100vw; height: 100vh; position: fixed; }
 
-    /* --- 2. TEXT: LANGSAMER & GEORDNETER --- */
+    /* --- 2. TEXT: ORIGINAL DESKTOP TIMING --- */
     .birthday-message {
         position: fixed !important; 
-        top: 15% !important; /* Etwas tiefer, wirkt entspannter */
+        top: 15% !important;
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important; text-align: center !important; z-index: 99999;
@@ -1748,7 +1746,7 @@ body {
     
     .birthday-message span {
         font-family: 'Send Flowers', cursive !important; 
-        font-size: 5rem; /* Leicht kleiner für mehr Eleganz */
+        font-size: 5rem;
         display: inline-block; 
         color: #ffbf00; 
         background: linear-gradient(to bottom, #ffffac 0%, #ffbf00 45%, #ffbf00 100%);
@@ -1756,17 +1754,17 @@ body {
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
         
         opacity: 0; 
-        /* HIER IST DIE ÄNDERUNG: 4s statt 2s für sehr weiches Einblenden */
-        animation: simpleFadeIn 4s ease-out forwards !important; 
+        /* ZURÜCK AUF 2s (wie Desktop) */
+        animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* Die neuen Zeiten: Viel mehr Abstand zwischen den Wörtern */
-    .birthday-message span:nth-child(1) { animation-delay: 5s !important; }  /* "Happy" startet früher */
-    .birthday-message span:nth-child(2) { animation-delay: 8s !important; }  /* 3 Sek. Pause -> "Birthday" */
+    /* WICHTIG: Wir haben die extra "animation-delay" Regeln hier GELÖSCHT. 
+       Dadurch greifen jetzt wieder die Original-Zeiten aus der HTML-Datei:
+       6s, 6.5s und 7s. */
     
     .birthday-message span.name-highlight {
         font-size: 8rem; display: inline-block !important; margin-top: 20px; position: relative;
-        animation-delay: 11s !important; /* Weitere 3 Sek. Pause -> "Julia" */
+        /* Kein extra Delay mehr hier -> nutzt die 7s vom HTML */
     }
     
     .birthday-message span.name-highlight::before {
@@ -1781,11 +1779,11 @@ body {
     }
     @keyframes simpleFadeIn { to { opacity: 1; } }
 
-    /* 3. BLUMEN & NATUR (Sichtbarkeit erzwingen) */
+    /* 3. BLUMEN & NATUR */
     .flowers {
         position: fixed !important; bottom: 2vh !important; left: 50% !important;
         width: 0 !important; height: 0 !important;
-        transform: scale(1.6) !important; /* Leicht reduziert, damit Gras besser passt */
+        transform: scale(1.6) !important; 
         transform-origin: bottom center !important;
         z-index: 10 !important; pointer-events: none; will-change: transform;
     }
