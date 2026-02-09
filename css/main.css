@@ -1827,26 +1827,43 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 
-/* --- FIX: ZERSTÜCKELTES GRAS (Reparatur-Kit) --- */
+/* --- AGGRESSIVER FIX FÜR ZERSTÜCKELTES GRAS (V3) --- */
 
-    /* 1. Die "Geister-Blätter" unten reparieren */
-    /* Wir schalten die Transparenz-Maske aus, damit das Blatt voll sichtbar ist */
+    /* 1. Die dicken Blätter (unten und rechts) reparieren */
+    /* Wir entfernen alle Masken und Transparenzen erzwingen eine feste Farbe */
     .long-g .leaf, 
     .flower__g-right .leaf,
-    .flower__g-fr .leaf {
+    .flower__g-fr .leaf,
+    .flower__g-fr__leaf {
+        /* Maske ausschalten, damit nichts abgeschnitten wird */
         -webkit-mask-image: none !important;
         mask-image: none !important;
+        
+        /* Den Hintergrund auf einen vollen, sichtbaren Verlauf setzen (kein Transparent!) */
+        background-image: linear-gradient(to bottom, #1aaa15 0%, #0a4a08 100%) !important;
+        
+        /* Sicherstellen, dass die Farbe voll deckt */
+        opacity: 1 !important;
     }
 
-    /* 2. Den "gebrochenen" Halm links oben reparieren */
-    /* Wir entfernen die Rotation, damit Ober- und Unterteil perfekt gerade aufeinander sitzen */
+    /* 2. Den dünnen gebrochenen Halm (links oben) zusammenschweißen */
     .flower__grass--top {
-        transform: rotate(0deg) !important; 
+        /* Rotation entfernen, damit er gerade steht */
+        transform: rotate(0deg) !important;
+        transform-origin: bottom center !important;
+        
+        /* Wir schieben den Kopf 2 Pixel nach unten */
+        position: relative !important;
+        top: 2px !important;
     }
     
-    /* Wir ziehen den Stängel etwas höher, damit sie sich sicher überlappen */
     .flower__grass--bottom {
-        margin-top: -5px !important; 
+        /* Wir ziehen den Stängel 10 Pixel nach oben in den Kopf hinein (massiver Überlapp) */
+        margin-top: -10px !important; 
+        
+        /* Wir machen den Stängel künstlich länger, damit keine Lücke entstehen kann */
+        height: 30vmin !important;
+        background-image: linear-gradient(to top, transparent, #00b815) !important;
     }
 
     /* --- PERFORMANCE BOOSTER (JETZT KORREKT VERSCHACHTELT) --- */
