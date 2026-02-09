@@ -1714,7 +1714,7 @@ body {
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
 }
 
-/* --- FINALE MOBILE VERSION (V30 - Animation Fixed) --- */
+/* --- FINALE MOBILE VERSION (V31 - Visibility Fix) --- */
 @media screen and (max-width: 1024px) {
 
     /* 1. HINTERGRUND & BASICS */
@@ -1734,7 +1734,7 @@ body {
     }
     body { overflow: hidden; width: 100vw; height: 100vh; position: fixed; }
 
-    /* --- 2. TEXT: KORREKTES TIMING WIEDERHERGESTELLT --- */
+    /* --- 2. TEXT: KORREKTES TIMING & SICHTBARKEIT --- */
     .birthday-message {
         position: fixed !important; 
         top: 15% !important;
@@ -1753,20 +1753,19 @@ body {
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 5px rgba(0,0,0, 0.8));
         
-        /* Startzustand unsichtbar erzwingen */
-        opacity: 0 !important; 
+        /* FIX: Opacity auf 0, aber OHNE !important, damit die Animation sie ändern darf */
+        opacity: 0; 
         
-        /* Animation definieren */
+        /* Animation: 2 Sekunden Einblenden */
         animation: simpleFadeIn 2s ease-out forwards !important; 
     }
 
-    /* HIER SIND DIE FEHLENDEN VERZÖGERUNGEN (WICHTIG!) */
+    /* WIEDER DA: Die Verzögerungen zwingend vorschreiben */
     .birthday-message span:nth-child(1) { animation-delay: 6s !important; }
     .birthday-message span:nth-child(2) { animation-delay: 6.5s !important; }
     
     .birthday-message span.name-highlight {
         font-size: 8rem; display: inline-block !important; margin-top: 20px; position: relative;
-        /* Auch hier die Verzögerung erzwingen */
         animation-delay: 7s !important;
     }
     
@@ -1781,7 +1780,10 @@ body {
         filter: none !important; opacity: 1 !important; -webkit-text-fill-color: initial !important;
     }
     
-
+    @keyframes simpleFadeIn { 
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
 
     /* 3. BLUMEN & NATUR */
     .flowers {
