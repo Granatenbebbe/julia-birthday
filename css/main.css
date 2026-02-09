@@ -1827,6 +1827,25 @@ body {
     
     @keyframes simpleFadeIn { to { opacity: 1; } }
 
+    /* --- FIX: GRASHALME VERSCHIEBEN (in Mobile-Sektion einfügen) --- */
+
+    /* 1. Das obere feine Gras (oberer roter Kreis) nach rechts holen */
+    .flower__grass {
+        /* War vorher -7vmin, wir setzen es auf +15, damit es reinrückt */
+        left: 15vmin !important; 
+    }
+
+    /* 2. Die großen Blätter unten (untere rote Kreise) nach rechts holen */
+    .long-g {
+        /* Wir schieben die gesamte untere Gras-Gruppe nach rechts */
+        margin-left: 15vmin !important;
+    }
+
+    /* Optional: Damit das rechte Gras nicht zu weit rechts ist, ziehen wir das etwas zurück */
+    .long-g--5, .long-g--6, .long-g--7 {
+        margin-left: -10vmin !important;
+    }
+
     /* --- PERFORMANCE BOOSTER (JETZT KORREKT VERSCHACHTELT) --- */
 
     /* 1. Schatten entfernen */
