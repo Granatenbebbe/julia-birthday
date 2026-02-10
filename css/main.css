@@ -1826,7 +1826,7 @@ body {
 /* 1. Das Gras OBEN LINKS (flower__grass--1) */
 /* Hier war "3.5vmin" zu viel, wir gehen runter auf 1.5vmin */
 .flower__grass--1 .flower__grass--bottom {
-    transform: translateX(1.2vmin);
+    transform: translateX(0.7vmin);
     margin-top: -3px !important;
 }
 
