@@ -1826,7 +1826,7 @@ body {
 /* 1. Das Gras OBEN LINKS (flower__grass--1) */
 /* Hier war "3.5vmin" zu viel, wir gehen runter auf 1.5vmin */
 .flower__grass--1 .flower__grass--bottom {
-    transform: translateX(2vmin);
+    transform: translateX(3vmin);
     margin-top: -3px !important;
 }
 
@@ -1840,7 +1840,7 @@ body {
 }
 
 /* 3. Der lange Stängel (flower__g-long) */
-/* Falls der mittlere/rechte Stängel auch betroffen ist: */
+/* Falls der mittlere/rechte Stängel auch betroffen ist: PASST JETZT!!! */
 .flower__g-long__bottom {
     transform: translateX(1.7vmin);
 }
