@@ -1826,7 +1826,7 @@ body {
 /* 1. Das Gras OBEN LINKS (flower__grass--1) */
 /* Hier war "3.5vmin" zu viel, wir gehen runter auf 1.5vmin */
 .flower__grass--1 .flower__grass--bottom {
-    transform: translateX(1.2vmin);
+    transform: translateX(1.3vmin);
     margin-top: -3px !important;
 }
 
@@ -1835,14 +1835,14 @@ body {
    müssen wir den Wert drastisch erhöhen (auf ca. 8-9vmin), 
    um optisch denselben Effekt zu erzielen. */
 .flower__grass--2 .flower__grass--bottom {
-    transform: translateX(0vmin); 
+    transform: translateX(-1.5vmin); 
     margin-top: -4px !important;
 }
 
 /* 3. Der lange Stängel (flower__g-long) */
 /* Falls der mittlere/rechte Stängel auch betroffen ist: */
 .flower__g-long__bottom {
-    transform: translateX(1.9vmin);
+    transform: translateX(2.7vmin);
 }
 
 } 
