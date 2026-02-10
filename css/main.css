@@ -1821,5 +1821,26 @@ body {
         backface-visibility: hidden; -webkit-backface-visibility: hidden; perspective: 1000px;
     }
     .flower__light { display: none !important; }
+    /* --- FIX FÜR ZERSTÜCKELTE GRASHALME AUF MOBILE --- */
+/* Füge dies innerhalb der Klammer von @media screen and (max-width: 1024px) ein, 
+   oder ganz am Ende der Datei, da die Media Query dort noch offen ist. */
+
+/* 1. Korrektur für die dünnen Grashalme (die rot markierten Bereiche) */
+.flower__grass--bottom {
+    /* Schiebt den unteren Stängelteil horizontal nach rechts.
+       1.2vmin entspricht fast der Linienstärke (--line-w: 1.5vmin),
+       was die Lücke visuell schließt. */
+    transform: translateX(1.2vmin);
+    
+    /* Optional: Falls noch eine feine Linie (Naht) zu sehen ist, 
+       hilft eine leichte Skalierung, um die Teile zu überlappen */
+    margin-top: -3px !important;
+}
+
+/* 2. Optional: Falls der dicke Stängel in der Mitte (flower__g-long) 
+   auch betroffen ist (gleiches Bauprinzip): */
+.flower__g-long__bottom {
+    transform: translateX(0.8vmin);
+}
 
 } /* <--- ENDE DER DATEI */
