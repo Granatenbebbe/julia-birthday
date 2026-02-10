@@ -1835,7 +1835,7 @@ body {
    müssen wir den Wert drastisch erhöhen (auf ca. 8-9vmin), 
    um optisch denselben Effekt zu erzielen. */
 .flower__grass--2 .flower__grass--bottom {
-    transform: translateX(8vmin); 
+    transform: translateX(7vmin); 
     margin-top: -4px !important;
 }
 
