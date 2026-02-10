@@ -1842,7 +1842,7 @@ body {
 /* 3. Der lange Stängel (flower__g-long) */
 /* Falls der mittlere/rechte Stängel auch betroffen ist: */
 .flower__g-long__bottom {
-    transform: translateX(2.3vmin);
+    transform: translateX(2.1vmin);
 }
 
 } 
