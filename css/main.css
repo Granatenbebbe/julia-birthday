@@ -34,10 +34,6 @@ body {
   transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, 
   rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(21, 255, 0), 
   rgb(240, 240, 240));
-  will-change: transform;
-    transform: translateZ(0);
-    /* Verhindert, dass Maus-Events Berechnungen auslösen */
-    pointer-events: none;
 }
 
 
@@ -1716,38 +1712,6 @@ body {
     background-image: none !important;
     /* Oder alternativ, falls du den Schatten behalten willst, aber weicher: */
     /* background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3) 80%) !important; */
-}
-/* --- PERFORMANCE BOOSTER (DESKTOP & MOBILE) --- */
-
-/* 1. GPU-Layer erzwingen für alle animierten Elemente */
-.flower, 
-.flower__leaf, 
-.flower__leafs, 
-.flower__line, 
-.flower__line__leaf, 
-.flower__grass, 
-.growing-grass,
-.flower__g-long, 
-.flower__g-right, 
-.long-g {
-    /* Sagt dem Browser: Bereite dich auf Transformationen vor */
-    will-change: transform, opacity;
-    
-    /* Verhindert Flackern bei 3D-Drehungen */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    
-    /* Aktiviert den "3D-Modus" der Grafikkarte (Hack für Performance) */
-    transform: translateZ(0);
-    
-    /* Glättet Kanten bei Rotationen */
-    -webkit-font-smoothing: antialiased;
-}
-
-/* 2. Optimierung für die Container */
-.flowers {
-    /* Damit der Container nicht bei jedem Frame das Layout neu berechnet */
-    will-change: transform;
 }
 
 /* --- FINALE MOBILE VERSION (V31 - Visibility Fix) --- */
